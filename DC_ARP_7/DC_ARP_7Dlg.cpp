@@ -1,5 +1,5 @@
-
-// DC_ARP_7Dlg.cpp : ±¸Çö ÆÄÀÏ
+ï»¿
+// DC_ARP_7Dlg.cpp : êµ¬í˜„ íŒŒì¼
 //
 
 #include "stdafx.h"
@@ -21,21 +21,21 @@ CDC_ARP_7Dlg::CDC_ARP_7Dlg(CWnd* pParent /*=NULL*/)
 {
    m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
-   // ·¹ÀÌ¾î »ı¼º ¹× °ü°è¼³Á¤
+   // ë ˆì´ì–´ ìƒì„± ë° ê´€ê³„ì„¤ì •
    m_LayerMgr.AddLayer( this );
    m_LayerMgr.AddLayer( new CARPLayer("ARPLayer"));
    m_LayerMgr.AddLayer( new CEthernetLayer( "EthernetLayer"));
    m_LayerMgr.AddLayer( new CPacketDriverLayer( "PacketDriverLayer"));
 
-   // dialog layer ¿Í ArpLayer¸¦ ¿¬°á
+   // dialog layer ì™€ ArpLayerë¥¼ ì—°ê²°
    m_LayerMgr.ConnectLayers("PacketDriverLayer ( *EthernetLayer ( *ARPLayer ) )");
    
-   //ÇöÀç layer¿Í ARPLayer¸¦ ¿¬°á
+   //í˜„ì¬ layerì™€ ARPLayerë¥¼ ì—°ê²°
    mp_UnderLayer = m_LayerMgr.GetLayer(1);
    mp_UnderLayer->SetUpperLayer(m_LayerMgr.GetLayer(0));
    m_pdLayer = (CPacketDriverLayer*)m_LayerMgr.GetLayer(3);
 
-   	//³ªÀÇ IP ÁÖ¼Ò¸¦ ÀÔ·Â
+   	//ë‚˜ì˜ IP ì£¼ì†Œë¥¼ ì…ë ¥
 	ipMyAddress[0] = 169;
 	ipMyAddress[1] = 254;
 	ipMyAddress[2] = 246;
@@ -43,7 +43,7 @@ CDC_ARP_7Dlg::CDC_ARP_7Dlg(CWnd* pParent /*=NULL*/)
 
 	((CARPLayer*)mp_UnderLayer)->setSrcIpAddress(ipMyAddress);
 
-	//³ªÀÇ MAC ÁÖ¼Ò¸¦ ÀÔ·Â
+	//ë‚˜ì˜ MAC ì£¼ì†Œë¥¼ ì…ë ¥
 	macMyAddress[0] = (int)strtol("44",NULL,16);
 	macMyAddress[1] = (int)strtol("A8",NULL,16);
 	macMyAddress[2] = (int)strtol("42",NULL,16);
@@ -55,7 +55,7 @@ CDC_ARP_7Dlg::CDC_ARP_7Dlg(CWnd* pParent /*=NULL*/)
 	AfxBeginThread(threadCapture , this);
 }
 
-//pDX¸¦ ÀÌ¿ëÇÏ¿© µÎ ¹øÂ° ÀÎÀÚ¿Í ¼¼ ¹øÂ° ÀÎÀÚÀÎ Å¬·¡½º º¯¼ö¸¦ ¿¬°á
+//pDXë¥¼ ì´ìš©í•˜ì—¬ ë‘ ë²ˆì§¸ ì¸ìì™€ ì„¸ ë²ˆì§¸ ì¸ìì¸ í´ë˜ìŠ¤ ë³€ìˆ˜ë¥¼ ì—°ê²°
 void CDC_ARP_7Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
@@ -65,7 +65,7 @@ void CDC_ARP_7Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, MAC_Address, MAC_Address_Main);
 }
 
-// CDC_ARP_7Dlg ¸Ş½ÃÁö Ã³¸®±â
+// CDC_ARP_7Dlg ë©”ì‹œì§€ ì²˜ë¦¬ê¸°
 BEGIN_MESSAGE_MAP(CDC_ARP_7Dlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
@@ -73,13 +73,9 @@ BEGIN_MESSAGE_MAP(CDC_ARP_7Dlg, CDialogEx)
 	ON_BN_CLICKED(Proxy_AddDlg, &CDC_ARP_7Dlg::OnBnClickedAdddlg)
 	ON_BN_CLICKED(Proxy_deleteBtn, &CDC_ARP_7Dlg::OnBnClickeddeletebtn)
 	ON_BN_CLICKED(ARP_IDeleteBtn, &CDC_ARP_7Dlg::OnBnClickedARPItemdeletebtn)
-	ON_BN_CLICKED(ARP_ADeleteBtn, &CDC_ARP_7Dlg::OnBnClickedARPAlldeletebtn)
-	ON_BN_CLICKED(IP_SendBtn, &CDC_ARP_7Dlg::OnBnClickedIPSendbtn)
-	ON_BN_CLICKED(MAC_SendBtn, &CDC_ARP_7Dlg::OnBnClickedMACSendbtn)
 	ON_REGISTERED_MESSAGE( CARPLayer::nRegArpSendMsg , OnRegArpSendMsg )
 	ON_REGISTERED_MESSAGE( CARPLayer::nRegKillRestartTimerMsg , OnRegKillRestartTimerMsg )
 	ON_WM_TIMER()
-
 END_MESSAGE_MAP()
 
 
@@ -110,40 +106,40 @@ BOOL CDC_ARP_7Dlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			
 	SetIcon(m_hIcon, FALSE);		
 
-	// Ãß°¡ ÃÊ±âÈ­ ÀÛ¾÷À» Ãß°¡ÇÕ´Ï´Ù.
+	// ì¶”ê°€ ì´ˆê¸°í™” ì‘ì—…ì„ ì¶”ê°€í•©ë‹ˆë‹¤.
 	ARP_Cache.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 	Proxy_Cache.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 
-	//ARP Cache Table ºĞÇÒ ¼³Á¤
+	//ARP Cache Table ë¶„í•  ì„¤ì •
 	ARP_Cache.InsertColumn(0 , _T("IP") , LVCFMT_LEFT , 80);
 	ARP_Cache.InsertColumn(1 , _T("MAC") , LVCFMT_LEFT , 110);
 	ARP_Cache.InsertColumn(2 , _T("State") , LVCFMT_LEFT , 100);
 	ARP_Cache.InsertColumn(3 , _T("Time") , LVCFMT_LEFT , 50);	
 
-	//Proxy Cache Table ºĞÇÒ ¼³Á¤
+	//Proxy Cache Table ë¶„í•  ì„¤ì •
 	Proxy_Cache.InsertColumn(0, _T("Device") , LVCFMT_LEFT , 95);
 	Proxy_Cache.InsertColumn(1, _T("IP") , LVCFMT_LEFT , 80);
 	Proxy_Cache.InsertColumn(2, _T("MAC") , LVCFMT_LEFT , 100);
 
-	SetTimer(1, 1000 ,NULL); //table timer¸¦ ÅëÇØ¼­ nodeÀÇ ½Ã°£ °ªÀ» º¯È¯ 
+	SetTimer(1, 1000 ,NULL); //table timerë¥¼ í†µí•´ì„œ nodeì˜ ì‹œê°„ ê°’ì„ ë³€í™˜ 
 	UpdateData( false );
-	return TRUE;  // Æ÷Ä¿½º¸¦ ÄÁÆ®·Ñ¿¡ ¼³Á¤ÇÏÁö ¾ÊÀ¸¸é TRUE¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+	return TRUE;  // í¬ì»¤ìŠ¤ë¥¼ ì»¨íŠ¸ë¡¤ì— ì„¤ì •í•˜ì§€ ì•Šìœ¼ë©´ TRUEë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
 }
 
 
-// ´ëÈ­ »óÀÚ¿¡ ÃÖ¼ÒÈ­ ´ÜÃß¸¦ Ãß°¡ÇÒ °æ¿ì ¾ÆÀÌÄÜÀ» ±×¸®·Á¸é
-//  ¾Æ·¡ ÄÚµå°¡ ÇÊ¿äÇÕ´Ï´Ù. ¹®¼­/ºä ¸ğµ¨À» »ç¿ëÇÏ´Â MFC ÀÀ¿ë ÇÁ·Î±×·¥ÀÇ °æ¿ì¿¡´Â
-//  ÇÁ·¹ÀÓ¿öÅ©¿¡¼­ ÀÌ ÀÛ¾÷À» ÀÚµ¿À¸·Î ¼öÇàÇÕ´Ï´Ù.
+// ëŒ€í™” ìƒìì— ìµœì†Œí™” ë‹¨ì¶”ë¥¼ ì¶”ê°€í•  ê²½ìš° ì•„ì´ì½˜ì„ ê·¸ë¦¬ë ¤ë©´
+//  ì•„ë˜ ì½”ë“œê°€ í•„ìš”í•©ë‹ˆë‹¤. ë¬¸ì„œ/ë·° ëª¨ë¸ì„ ì‚¬ìš©í•˜ëŠ” MFC ì‘ìš© í”„ë¡œê·¸ë¨ì˜ ê²½ìš°ì—ëŠ”
+//  í”„ë ˆì„ì›Œí¬ì—ì„œ ì´ ì‘ì—…ì„ ìë™ìœ¼ë¡œ ìˆ˜í–‰í•©ë‹ˆë‹¤.
 
 void CDC_ARP_7Dlg::OnPaint()
 {
    if (IsIconic())
    {
-      CPaintDC dc(this); // ±×¸®±â¸¦ À§ÇÑ µğ¹ÙÀÌ½º ÄÁÅØ½ºÆ®ÀÔ´Ï´Ù.
+      CPaintDC dc(this); // ê·¸ë¦¬ê¸°ë¥¼ ìœ„í•œ ë””ë°”ì´ìŠ¤ ì»¨í…ìŠ¤íŠ¸ì…ë‹ˆë‹¤.
 
       SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
-      // Å¬¶óÀÌ¾ğÆ® »ç°¢Çü¿¡¼­ ¾ÆÀÌÄÜÀ» °¡¿îµ¥¿¡ ¸ÂÃä´Ï´Ù.
+      // í´ë¼ì´ì–¸íŠ¸ ì‚¬ê°í˜•ì—ì„œ ì•„ì´ì½˜ì„ ê°€ìš´ë°ì— ë§ì¶¥ë‹ˆë‹¤.
       int cxIcon = GetSystemMetrics(SM_CXICON);
       int cyIcon = GetSystemMetrics(SM_CYICON);
       CRect rect;
@@ -151,7 +147,7 @@ void CDC_ARP_7Dlg::OnPaint()
       int x = (rect.Width() - cxIcon + 1) / 2;
       int y = (rect.Height() - cyIcon + 1) / 2;
 
-      // ¾ÆÀÌÄÜÀ» ±×¸³´Ï´Ù.
+      // ì•„ì´ì½˜ì„ ê·¸ë¦½ë‹ˆë‹¤.
       dc.DrawIcon(x, y, m_hIcon);
    }
    else
@@ -160,23 +156,23 @@ void CDC_ARP_7Dlg::OnPaint()
    }
 }
 
-// »ç¿ëÀÚ°¡ ÃÖ¼ÒÈ­µÈ Ã¢À» ²ô´Â µ¿¾È¿¡ Ä¿¼­°¡ Ç¥½ÃµÇµµ·Ï ½Ã½ºÅÛ¿¡¼­
-//  ÀÌ ÇÔ¼ö¸¦ È£ÃâÇÕ´Ï´Ù.
+// ì‚¬ìš©ìê°€ ìµœì†Œí™”ëœ ì°½ì„ ë„ëŠ” ë™ì•ˆì— ì»¤ì„œê°€ í‘œì‹œë˜ë„ë¡ ì‹œìŠ¤í…œì—ì„œ
+//  ì´ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•©ë‹ˆë‹¤.
 HCURSOR CDC_ARP_7Dlg::OnQueryDragIcon()
 {
    return static_cast<HCURSOR>(m_hIcon);
 }
 LRESULT CDC_ARP_7Dlg::OnRegArpSendMsg(WPARAM wParam, LPARAM lParam)
 {
-   SetTimer(3, 2000 , NULL);   // Àü¼ÛÀ» ÇÏ¿© ÆĞÅ¶À» º¸³ÂÀ» ¶§ ÀÛµ¿ÇÑ´Ù
-   GetDlgItem(IP_SendBtn)->EnableWindow(FALSE);   // IP¸¦ send ÇÏ´Â ¹öÆ°À» ºñÈ°¼ºÈ­
+   SetTimer(3, 2000 , NULL);   // ì „ì†¡ì„ í•˜ì—¬ íŒ¨í‚·ì„ ë³´ëƒˆì„ ë•Œ ì‘ë™í•œë‹¤
+   GetDlgItem(IP_SendBtn)->EnableWindow(FALSE);   // IPë¥¼ send í•˜ëŠ” ë²„íŠ¼ì„ ë¹„í™œì„±í™”
    return 0;
 }
 
 LRESULT CDC_ARP_7Dlg::OnRegKillRestartTimerMsg(WPARAM wParam , LPARAM lParam)
-{   // ÀçÀü¼ÛÀ» À§ÇÑ timer°¡ ÇÊ¿ä ¾ø¾îÁú ¶§ ÀÛµ¿
-   KillTimer(3); //timer¸¦ Kill ÇÑ´Ù.
-   GetDlgItem(IP_SendBtn)->EnableWindow(TRUE);   // IP¸¦ send ÇÏ´Â ¹öÆ°À» È°¼ºÈ­
+{   // ì¬ì „ì†¡ì„ ìœ„í•œ timerê°€ í•„ìš” ì—†ì–´ì§ˆ ë•Œ ì‘ë™
+   KillTimer(3); //timerë¥¼ Kill í•œë‹¤.
+   GetDlgItem(IP_SendBtn)->EnableWindow(TRUE);   // IPë¥¼ send í•˜ëŠ” ë²„íŠ¼ì„ í™œì„±í™”
    return 0;
 }
 
@@ -184,11 +180,11 @@ void CDC_ARP_7Dlg::OnTimer(UINT_PTR nIDEvent)
 {
    if(nIDEvent == 1)
    {
-      ((CARPLayer*)mp_UnderLayer)->TableTimer();   // ½Ã°£ °ªÀ» º¯È­½ÃÅ²´Ù.
+      ((CARPLayer*)mp_UnderLayer)->TableTimer();   // ì‹œê°„ ê°’ì„ ë³€í™”ì‹œí‚¨ë‹¤.
    }
    else if(nIDEvent == 3)
    {
-      ((CARPLayer*)mp_UnderLayer)->reSend();   // reSend ÇÔ¼ö·Î PacketÀ» ÀçÀü¼ÛÇÑ´Ù.
+      ((CARPLayer*)mp_UnderLayer)->reSend();   // reSend í•¨ìˆ˜ë¡œ Packetì„ ì¬ì „ì†¡í•œë‹¤.
    }
    __super::OnTimer(nIDEvent);
 }
@@ -203,46 +199,46 @@ void CDC_ARP_7Dlg::OnBnClickedAdddlg()
    unsigned char ip[4]; 
    unsigned char mac[6];
 
-   // Proxy Á¤º¸¸¦ Ãß°¡ÇÑ´Ù.
+   // Proxy ì •ë³´ë¥¼ ì¶”ê°€í•œë‹¤.
    if(m_ProxyDlg.DoModal()==1)
-   {   // proxy dialog¸¦ ¶ç¿ì°í IP¿Í MACÀ» ÀÔ·ÂÇÏ°í È®ÀÎ ¹öÆ°À» ´©¸£¸é
+   {   // proxy dialogë¥¼ ë„ìš°ê³  IPì™€ MACì„ ì…ë ¥í•˜ê³  í™•ì¸ ë²„íŠ¼ì„ ëˆ„ë¥´ë©´
       devName = "interface0"; 
-      memcpy(ip , m_ProxyDlg.proxy_TargetIp , 4); //Proxy dialog¿¡ ÀûÀº ID¸¦ ip·Î º¹»çÇÏ¿© ¹Ş¾Æ¿Â´Ù.
-      memcpy(mac , m_ProxyDlg.proxy_MyMac , 6); // Proxy dialog¿¡ ÀûÀº MACÀ» macÀ¸·Î º¹»çÇÏ¿© ¹Ş¾Æ¿Â´Ù.
+      memcpy(ip , m_ProxyDlg.proxy_TargetIp , 4); //Proxy dialogì— ì ì€ IDë¥¼ ipë¡œ ë³µì‚¬í•˜ì—¬ ë°›ì•„ì˜¨ë‹¤.
+      memcpy(mac , m_ProxyDlg.proxy_MyMac , 6); // Proxy dialogì— ì ì€ MACì„ macìœ¼ë¡œ ë³µì‚¬í•˜ì—¬ ë°›ì•„ì˜¨ë‹¤.
    
-      ((CARPLayer*)m_LayerMgr.GetLayer(1))->AddProxy(devName , ip , mac); // ¹Ş¾Æ¿Â IP¿Í MACÀ» ÅëÇØ proxy Á¤º¸¸¦ Ãß°¡ÇÏ´Â ÇÔ¼ö·Î º¸³»ÁØ´Ù.
+      ((CARPLayer*)m_LayerMgr.GetLayer(1))->AddProxy(devName , ip , mac); // ë°›ì•„ì˜¨ IPì™€ MACì„ í†µí•´ proxy ì •ë³´ë¥¼ ì¶”ê°€í•˜ëŠ” í•¨ìˆ˜ë¡œ ë³´ë‚´ì¤€ë‹¤.
    }
 }
 
 
 void CDC_ARP_7Dlg::OnBnClickeddeletebtn()
 {
-      // TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+      // TODO: ì—¬ê¸°ì— ì»¨íŠ¸ë¡¤ ì•Œë¦¼ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
    POSITION pos;
    pos = Proxy_Cache.GetFirstSelectedItemPosition();
 
-   int temp = Proxy_Cache.GetNextSelectedItem(pos); //Proxy Table¿¡¼­ ¼±ÅÃÇÑ entryÀÇ index¸¦ temp·Î ¼³Á¤ÇÑ´Ù.
+   int temp = Proxy_Cache.GetNextSelectedItem(pos); //Proxy Tableì—ì„œ ì„ íƒí•œ entryì˜ indexë¥¼ tempë¡œ ì„¤ì •í•œë‹¤.
 
-   // ¼±ÅÃÇÑ proxy entry¸¦ Ã£¾Æ »èÁ¦ÇÑ´Ù.
+   // ì„ íƒí•œ proxy entryë¥¼ ì°¾ì•„ ì‚­ì œí•œë‹¤.
    ((CARPLayer*)m_LayerMgr.GetLayer(1))->DeleteProxy(temp);
 }
 
 
 void CDC_ARP_7Dlg::OnBnClickedARPItemdeletebtn()
 {
-   // TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+   // TODO: ì—¬ê¸°ì— ì»¨íŠ¸ë¡¤ ì•Œë¦¼ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
    POSITION pos;
-   pos = ARP_Cache.GetFirstSelectedItemPosition();  //ARP Table¿¡¼­ ¼±ÅÃÇÑ entryÀÇ index¸¦ temp·Î ¼³Á¤ÇÑ´Ù.
+   pos = ARP_Cache.GetFirstSelectedItemPosition();  //ARP Tableì—ì„œ ì„ íƒí•œ entryì˜ indexë¥¼ tempë¡œ ì„¤ì •í•œë‹¤.
 
    int temp = ARP_Cache.GetNextSelectedItem(pos);
-   // ¼±ÅÃÇÑ ARP entry¸¦ Ã£¾Æ »èÁ¦ÇÑ´Ù.
+   // ì„ íƒí•œ ARP entryë¥¼ ì°¾ì•„ ì‚­ì œí•œë‹¤.
    ((CARPLayer*)m_LayerMgr.GetLayer(1))->DeleteItem(temp);
 }
 
 
 void CDC_ARP_7Dlg::OnBnClickedARPAlldeletebtn()
 {
-   // TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+   // TODO: ì—¬ê¸°ì— ì»¨íŠ¸ë¡¤ ì•Œë¦¼ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
    ((CARPLayer*)m_LayerMgr.GetLayer(1))->AllDelete();
 }
 
@@ -251,7 +247,7 @@ void CDC_ARP_7Dlg::OnBnClickedIPSendbtn()
 {
    unsigned char check_ARP[] = "A"; 
    UpdateData(true);
-   // TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+   // TODO: ì—¬ê¸°ì— ì»¨íŠ¸ë¡¤ ì•Œë¦¼ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
    BYTE ipField0,ipField1,ipField2,ipField3;
    unsigned char ipAddress[4];
    ((CARPLayer*)m_LayerMgr.GetLayer(1))->setSrcIpAddress(ipMyAddress);
@@ -262,13 +258,13 @@ void CDC_ARP_7Dlg::OnBnClickedIPSendbtn()
    ipAddress[1] = ipField1;
    ipAddress[2] = ipField2;
    ipAddress[3] = ipField3;
-   //¹Ş¾Æ¿Â IP Address¸¦ ¹è¿­·Î ³Ö¾îÁØ´Ù.
+   //ë°›ì•„ì˜¨ IP Addressë¥¼ ë°°ì—´ë¡œ ë„£ì–´ì¤€ë‹¤.
    ((CARPLayer*)m_LayerMgr.GetLayer(1))->setDstIpAddress(ipAddress);
-   // ÀÔ·ÂÇÑ IP¸¦ ARP Layer¿¡ º¸³»Áà¼­ °ªÀ» ¼³Á¤½ÃÅ´
+   // ì…ë ¥í•œ IPë¥¼ ARP Layerì— ë³´ë‚´ì¤˜ì„œ ê°’ì„ ì„¤ì •ì‹œí‚´
    
-   // ARP ¸ğµå·Î ¼³Á¤
+   // ARP ëª¨ë“œë¡œ ì„¤ì •
    
-   mp_UnderLayer->Send(check_ARP,0);   // ARP¸ğµå·Î ¼³Á¤ÇÑ Á¤º¸·Î Send ÇÔ¼ö¸¦ ºÎ¸¥´Ù.
+   mp_UnderLayer->Send(check_ARP,0);   // ARPëª¨ë“œë¡œ ì„¤ì •í•œ ì •ë³´ë¡œ Send í•¨ìˆ˜ë¥¼ ë¶€ë¥¸ë‹¤.
 }
 
 
@@ -279,26 +275,26 @@ void CDC_ARP_7Dlg::OnBnClickedMACSendbtn()
    
    ((CARPLayer*)m_LayerMgr.GetLayer(1))->setSrcIpAddress(ipMyAddress);
    ((CARPLayer*)m_LayerMgr.GetLayer(1))->setDstIpAddress(ipMyAddress);
-   // Desination IP ÁÖ¼Ò¿Í SenderÀÇ IP ÁÖ¼Ò¸¦ ¸ğµÎ ÀÚ½ÅÀÇ IP·Î ¼³Á¤
+   // Desination IP ì£¼ì†Œì™€ Senderì˜ IP ì£¼ì†Œë¥¼ ëª¨ë‘ ìì‹ ì˜ IPë¡œ ì„¤ì •
 
 
    char macEditAddr[20];
    MAC_Address_Main.GetWindowTextA(macEditAddr , 20);
 
-   if(strlen(macEditAddr) != 17){   // ÀÔ·Â¹ŞÀº MACÁÖ¼Ò¸¦ Ã¼Å©ÇÑ´Ù. Çü½ÄÀÌ FF:FF:FF:FF:FF:FF ¿Í °°À¸¹Ç·Î 17ÀÌ ¸Â´ÂÁö °Ë»çÇÑ´Ù.
-      this->MessageBox("Gratuitous ARP mac ¿¡·¯");
+   if(strlen(macEditAddr) != 17){   // ì…ë ¥ë°›ì€ MACì£¼ì†Œë¥¼ ì²´í¬í•œë‹¤. í˜•ì‹ì´ FF:FF:FF:FF:FF:FF ì™€ ê°™ìœ¼ë¯€ë¡œ 17ì´ ë§ëŠ”ì§€ ê²€ì‚¬í•œë‹¤.
+      this->MessageBox("Gratuitous ARP mac ì—ëŸ¬");
       return;
    }   
    sscanf(macEditAddr, "%02X:%02X:%02X:%02X:%02X:%02X",
       &globalMacAddress[0],&globalMacAddress[1],&globalMacAddress[2],&globalMacAddress[3],&globalMacAddress[4],&globalMacAddress[5]);
-   //ÀÔ·Â¹ŞÀº MACÁÖ¼Ò¸¦ globalMacAddress ¹è¿­À» ÅëÇØ¼­ 16Áø¼ö·Î ¹Ù²Û ´ÙÀ½ ÀúÀåÇÑ´Ù.
+   //ì…ë ¥ë°›ì€ MACì£¼ì†Œë¥¼ globalMacAddress ë°°ì—´ì„ í†µí•´ì„œ 16ì§„ìˆ˜ë¡œ ë°”ê¾¼ ë‹¤ìŒ ì €ì¥í•œë‹¤.
 
-   // Gratuitous mode ·Î ¼³Á¤
-   mp_UnderLayer->Send(check_ARP , 0);   // ¼³Á¤ÇÑ Gratuitous ¸ğµå¸¦ ÅëÇÏ¿© Send¸¦ ºÎ¸¥´Ù.
+   // Gratuitous mode ë¡œ ì„¤ì •
+   mp_UnderLayer->Send(check_ARP , 0);   // ì„¤ì •í•œ Gratuitous ëª¨ë“œë¥¼ í†µí•˜ì—¬ Sendë¥¼ ë¶€ë¥¸ë‹¤.
 }
 
 void CDC_ARP_7Dlg::GetNetWorkNameList()
-{	// ÄÄÇ»ÅÍ¿¡ ÀÖ´Â NIC ÀÌ¸§(¾î´ğÅÍ ÀÌ¸§)µéÀ» ¾ò¾î¿È.
+{	// ì»´í“¨í„°ì— ìˆëŠ” NIC ì´ë¦„(ì–´ëŒ‘í„° ì´ë¦„)ë“¤ì„ ì–»ì–´ì˜´.
 	int i;
 	char AdapterName[8192];
 	char *temp, *temp1;

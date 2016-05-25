@@ -60,4 +60,6 @@ public:
 	afx_msg void OnBnClickedARPAlldeletebtn();
 	afx_msg void OnBnClickedIPSendbtn();
 	afx_msg void OnBnClickedMACSendbtn();
+	afx_msg void OnEnChangeAddress();
+	afx_msg void OnIpnFieldchangedAddress(NMHDR *pNMHDR, LRESULT *pResult);
 };
