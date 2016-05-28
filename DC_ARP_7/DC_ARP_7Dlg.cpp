@@ -7,6 +7,7 @@
 #include "DC_ARP_7Dlg.h"
 #include "Proxy_Add_Dlg.h"
 #include "afxdialogex.h"
+#include "Routing_Add_Dlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -61,8 +62,9 @@ void CDC_ARP_7Dlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, ARP_CacheTable, ARP_Cache);
 	DDX_Control(pDX, Proxy_CacheTable, Proxy_Cache);
-	DDX_Control(pDX, IP_Address, IP_Address_Main);
-	DDX_Control(pDX, MAC_Address, MAC_Address_Main);
+	DDX_Control(pDX, Routing_CacheTable, Routing_Cache);
+	//DDX_Control(pDX, IP_Address, IP_Address_Main);
+	//DDX_Control(pDX, MAC_Address, MAC_Address_Main);
 }
 
 // CDC_ARP_7Dlg 메시지 처리기
@@ -76,6 +78,8 @@ BEGIN_MESSAGE_MAP(CDC_ARP_7Dlg, CDialogEx)
 	ON_REGISTERED_MESSAGE( CARPLayer::nRegArpSendMsg , OnRegArpSendMsg )
 	ON_REGISTERED_MESSAGE( CARPLayer::nRegKillRestartTimerMsg , OnRegKillRestartTimerMsg )
 	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_BUTTON1, &CDC_ARP_7Dlg::OnBnClickedRoutingAdd)
+	ON_BN_CLICKED(Routing_deleteBtn, &CDC_ARP_7Dlg::OnBnClickedRoutingdeleteBtn)
 END_MESSAGE_MAP()
 
 
@@ -109,17 +113,26 @@ BOOL CDC_ARP_7Dlg::OnInitDialog()
 	// 추가 초기화 작업을 추가합니다.
 	ARP_Cache.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 	Proxy_Cache.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+	Routing_Cache.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 
 	//ARP Cache Table 분할 설정
-	ARP_Cache.InsertColumn(0 , _T("IP") , LVCFMT_LEFT , 80);
+	ARP_Cache.InsertColumn(0 , _T("IP") , LVCFMT_LEFT , 120);
 	ARP_Cache.InsertColumn(1 , _T("MAC") , LVCFMT_LEFT , 110);
 	ARP_Cache.InsertColumn(2 , _T("State") , LVCFMT_LEFT , 100);
 	ARP_Cache.InsertColumn(3 , _T("Time") , LVCFMT_LEFT , 50);	
 
 	//Proxy Cache Table 분할 설정
 	Proxy_Cache.InsertColumn(0, _T("Device") , LVCFMT_LEFT , 95);
-	Proxy_Cache.InsertColumn(1, _T("IP") , LVCFMT_LEFT , 80);
+	Proxy_Cache.InsertColumn(1, _T("IP") , LVCFMT_LEFT , 120);
 	Proxy_Cache.InsertColumn(2, _T("MAC") , LVCFMT_LEFT , 100);
+
+	//Routing Cache Table 분할 설정
+	Routing_Cache.InsertColumn(0,_T("Destination"),LVCFMT_LEFT,120);
+	Routing_Cache.InsertColumn(1,_T("NetMask"),LVCFMT_LEFT,120);
+	Routing_Cache.InsertColumn(2,_T("Gateway"),LVCFMT_LEFT,120);
+	Routing_Cache.InsertColumn(3,_T("Flag"),LVCFMT_LEFT,50);
+	Routing_Cache.InsertColumn(4,_T("Interface"),LVCFMT_LEFT,80);
+	Routing_Cache.InsertColumn(5,_T("Metric"),LVCFMT_LEFT,80);
 
 	SetTimer(1, 1000 ,NULL); //table timer를 통해서 node의 시간 값을 변환 
 	UpdateData( false );
@@ -318,4 +331,22 @@ void CDC_ARP_7Dlg::GetNetWorkNameList()
 		i = 3;
 	for( i = 0 ; AdapterList[0][i] != '\0'; i++);
 	g_nicName = CString(AdapterList[0],i);
+}
+
+
+void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
+{
+	Routing_Add_Dlg dlg;
+	dlg.DoModal();
+}
+
+
+void CDC_ARP_7Dlg::OnBnClickedRoutingdeleteBtn()
+{
+   POSITION pos;
+   pos = Routing_Cache.GetFirstSelectedItemPosition();  //ARP Table에서 선택한 entry의 index를 temp로 설정한다.
+
+   int temp = Routing_Cache.GetNextSelectedItem(pos);
+   // 선택한 ARP entry를 찾아 삭제한다.
+   ((CARPLayer*)m_LayerMgr.GetLayer(1))->DeleteRouting(temp);	
 }

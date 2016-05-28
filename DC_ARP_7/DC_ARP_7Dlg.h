@@ -44,6 +44,7 @@ public:
 	unsigned char ipMyAddress[4]; // ip 설정 전역변수
 	CListCtrl ARP_Cache;
 	CListCtrl Proxy_Cache;
+	CListCtrl Routing_Cache;
 	CIPAddressCtrl IP_Address_Main;
 	CEdit MAC_Address_Main;
 	CPacketDriverLayer* m_pdLayer;
@@ -62,4 +63,6 @@ public:
 	afx_msg void OnBnClickedMACSendbtn();
 	afx_msg void OnEnChangeAddress();
 	afx_msg void OnIpnFieldchangedAddress(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedRoutingAdd();
+	afx_msg void OnBnClickedRoutingdeleteBtn();
 };

@@ -37,6 +37,7 @@ public:
    ProxyItem proxy_item;
    CList<CacheTable , CacheTable&> cache_table;
    CList<ProxyItem , ProxyItem&> proxy_table;
+   CList<ProxyItem , ProxyItem&> Routing_table;
    unsigned short sendCounter;
    unsigned char runMode;
    // function
@@ -56,6 +57,7 @@ public:
    void         DeleteProxy(int index);
    void         AllDelete();
    void         DeleteItem(int index);
+   void         DeleteRouting(int index);
    CARPLayer(char* pName);
    ~CARPLayer(void);
 
