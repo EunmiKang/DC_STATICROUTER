@@ -29,7 +29,7 @@ CDC_ARP_7Dlg::CDC_ARP_7Dlg(CWnd* pParent /*=NULL*/)
    m_LayerMgr.AddLayer( new CPacketDriverLayer( "PacketDriverLayer"));
 
    // dialog layer 와 ArpLayer를 연결
-   m_LayerMgr.ConnectLayers("PacketDriverLayer ( *EthernetLayer ( *ARPLayer ) )");
+   m_LayerMgr.ConnectLayers("PacketDriverLayer ( *EthernetLayer ( *ARPLayer +IpLayer ( *DC_ARP_7 -ARPLayer ) ) )");
    
    //현재 layer와 ARPLayer를 연결
    mp_UnderLayer = m_LayerMgr.GetLayer(1);
@@ -330,7 +330,7 @@ void CDC_ARP_7Dlg::GetNetWorkNameList()
 	}
 		i = 3;
 	for( i = 0 ; AdapterList[0][i] != '\0'; i++);
-	g_nicName = CString(AdapterList[0],i);
+		g_nicName = CString(AdapterList[0],i);
 }
 
 

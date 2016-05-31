@@ -54,7 +54,7 @@ void Proxy_Add_Dlg::OnProxyOkClicked()
    ipAddress[2] = nField2;
    ipAddress[3] = nField3;
    
-   memcpy(proxy_TargetIp , ipAddress , 4);            //입력받은 전체 아이피를 Target Ip 로 복사 
+   memcpy(proxy_TargetIp , ipAddress , 4);            //입력받은 전체 아이피를 Target Ip 로 복사
 
    
    Proxy_MAC.GetWindowText(proxy_MacTemp , sizeof(proxy_MacTemp));      //다이얼로그 창에서 입력한 Mac 주소를 임시 변수에 저장

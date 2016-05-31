@@ -107,6 +107,7 @@
     <ClInclude Include="DC_ARP_7.h" />
     <ClInclude Include="DC_ARP_7Dlg.h" />
     <ClInclude Include="EthernetLayer.h" />
+    <ClInclude Include="IpLayer.h" />
     <ClInclude Include="LayerManager.h" />
     <ClInclude Include="PacketDriverLayer.h" />
     <ClInclude Include="Proxy_Add_Dlg.h" />
@@ -121,6 +122,7 @@
     <ClCompile Include="DC_ARP_7.cpp" />
     <ClCompile Include="DC_ARP_7Dlg.cpp" />
     <ClCompile Include="EthernetLayer.cpp" />
+    <ClCompile Include="IpLayer.cpp" />
     <ClCompile Include="LayerManager.cpp" />
     <ClCompile Include="PacketDriverLayer.cpp" />
     <ClCompile Include="Proxy_Add_Dlg.cpp" />

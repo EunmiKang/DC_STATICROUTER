@@ -17,7 +17,7 @@ public:
       unsigned char   padding[18];
    } ETHERNET_HEADER , *PETHERNET_HEADER ;
 
-   ETHERNET_HEADER   m_sHeader ;
+   ETHERNET_HEADER   m_sHeader;
 
    void         ResetHeader();
    BOOL         Send( unsigned char* ppayload, int nlength , int type);

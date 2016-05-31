@@ -44,6 +44,7 @@
 #define run_Amode            0x10
 #define   run_Gmode            0x11
 #define run_Pmode            0x12
+#define MAX_STATIC_ROUTING_TABLE 20
 extern char   AdapterList[10][1024];
 
 extern UCHAR macMyAddress[6];
