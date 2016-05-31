@@ -19,13 +19,27 @@ Routing_Add_Dlg::Routing_Add_Dlg(CWnd* pParent /*=NULL*/)
 
 Routing_Add_Dlg::~Routing_Add_Dlg()
 {
+
 }
 
 void Routing_Add_Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, Destination, dst_IP);
+	DDX_Control(pDX, Netmask, netmask_IP);
+	DDX_Control(pDX, Gateway, Gateway_IP);
 }
+BOOL Routing_Add_Dlg::OnInitDialog(){
 
+	CDialogEx::OnInitDialog();
+
+	dst_IP.SetWindowText("255.255.255.0");
+	netmask_IP.SetWindowText("255.255.255.0");
+	Gateway_IP.SetWindowText("255.255.255.0");
+
+
+	return TRUE;
+}
 
 BEGIN_MESSAGE_MAP(Routing_Add_Dlg, CDialogEx)
 	ON_BN_CLICKED(add_Route_Table, &Routing_Add_Dlg::OnBnClickedaddRouteTable)

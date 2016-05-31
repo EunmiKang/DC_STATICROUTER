@@ -1,4 +1,6 @@
 #pragma once
+#include "afxcmn.h"
+#include "afxwin.h"
 
 
 // Routing_Add_Dlg 대화 상자입니다.
@@ -15,9 +17,13 @@ public:
 	enum { IDD = Routing_AddDlg };
 
 protected:
+	virtual BOOL OnInitDialog();
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
 
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedaddRouteTable();
+	CIPAddressCtrl dst_IP;
+	CIPAddressCtrl netmask_IP;
+	CIPAddressCtrl Gateway_IP;
 };
