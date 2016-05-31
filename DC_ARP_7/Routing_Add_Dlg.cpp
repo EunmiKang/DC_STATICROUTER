@@ -28,7 +28,15 @@ void Routing_Add_Dlg::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(Routing_Add_Dlg, CDialogEx)
+	ON_BN_CLICKED(add_Route_Table, &Routing_Add_Dlg::OnBnClickedaddRouteTable)
 END_MESSAGE_MAP()
 
 
 // Routing_Add_Dlg 메시지 처리기입니다.
+
+
+void Routing_Add_Dlg::OnBnClickedaddRouteTable()
+{
+
+	CDialogEx::OnOK();
+}
