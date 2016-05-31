@@ -78,7 +78,7 @@ BEGIN_MESSAGE_MAP(CDC_ARP_7Dlg, CDialogEx)
 	ON_REGISTERED_MESSAGE( CARPLayer::nRegArpSendMsg , OnRegArpSendMsg )
 	ON_REGISTERED_MESSAGE( CARPLayer::nRegKillRestartTimerMsg , OnRegKillRestartTimerMsg )
 	ON_WM_TIMER()
-	ON_BN_CLICKED(IDC_BUTTON1, &CDC_ARP_7Dlg::OnBnClickedRoutingAdd)
+	ON_BN_CLICKED(Routing_AddDlg, &CDC_ARP_7Dlg::OnBnClickedRoutingAdd)
 	ON_BN_CLICKED(Routing_deleteBtn, &CDC_ARP_7Dlg::OnBnClickedRoutingdeleteBtn)
 END_MESSAGE_MAP()
 
