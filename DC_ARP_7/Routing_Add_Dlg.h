@@ -26,10 +26,9 @@ public:
 	CIPAddressCtrl dst_IP;
 	CIPAddressCtrl netmask_IP;
 	CIPAddressCtrl Gateway_IP;
-	CCheckListBox check_up;
-	CCheckListBox check_gateway;
-	CCheckListBox check_host;
+	BOOL check_up;
+	BOOL check_gateway;
+	BOOL check_host;
 	CComboBox interfaceList;
 	CEdit metric_hop;
-	afx_msg void OnEnChangemetric();
 };

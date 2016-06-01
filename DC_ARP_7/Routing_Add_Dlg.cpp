@@ -28,10 +28,9 @@ void Routing_Add_Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, Destination, dst_IP);
 	DDX_Control(pDX, Netmask, netmask_IP);
 	DDX_Control(pDX, Gateway, Gateway_IP);
-	DDX_Control(pDX, c_up, check_up);
-	DDX_Control(pDX, c_gateway, check_gateway);
-	DDX_Control(pDX, c_host, check_host);
-	DDX_Control(pDX, c_interface, check_host);
+	DDX_Check(pDX, c_up, check_up);
+	DDX_Check(pDX, c_gateway, check_gateway);
+	DDX_Check(pDX, c_host, check_host);
 	DDX_Control(pDX, e_metric, metric_hop);
 }
 BOOL Routing_Add_Dlg::OnInitDialog(){
@@ -40,7 +39,7 @@ BOOL Routing_Add_Dlg::OnInitDialog(){
 
 	dst_IP.SetWindowText("192.168.0.0");
 	netmask_IP.SetWindowText("255.255.255.0");
-	Gateway_IP.SetWindowText("255.255.255.0");
+	Gateway_IP.SetWindowText("¿¬°áµÊ");
 
 
 	return TRUE;
