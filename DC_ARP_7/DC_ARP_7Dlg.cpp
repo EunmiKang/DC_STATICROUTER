@@ -25,8 +25,8 @@ CDC_ARP_7Dlg::CDC_ARP_7Dlg(CWnd* pParent /*=NULL*/)
 
    // 레이어 생성 및 관계설정
    m_LayerMgr.AddLayer( this );
-   m_LayerMgr.AddLayer( new CIpLayer("IpLayer"));
    m_LayerMgr.AddLayer( new CARPLayer("ARPLayer"));
+   m_LayerMgr.AddLayer( new CIpLayer("IpLayer"));
    m_LayerMgr.AddLayer( new CEthernetLayer( "EthernetLayer"));
    m_LayerMgr.AddLayer( new CPacketDriverLayer( "PacketDriverLayer"));
 
@@ -342,7 +342,7 @@ void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 {
 	Routing_Add_Dlg dlg;
 	if(dlg.DoModal()==1){
-		//CIpLayer::m_routingTable[routingTableCount]->
+		
 	}
 }
 
