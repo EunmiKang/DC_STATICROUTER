@@ -26,15 +26,16 @@ public:
 		unsigned char		destination[4];
 		unsigned char		netmask[4];
 		unsigned char		gateway[4];
-		char		flag[10];
-		char		interfaceDevice[200];		
-		int			metric;		
+		char				flag[10];
+		char				interfaceDevice[200];		
+		int					metric;		
 	}STATIC_ROUTING_TABLE, *PSTATIC_ROUTING_TABLE;
+	PSTATIC_ROUTING_TABLE static m_routingTable[MAX_STATIC_ROUTING_TABLE];
 
-	PSTATIC_ROUTING_TABLE m_routingTable[MAX_STATIC_ROUTING_TABLE];
 	void         ResetHeader();
 	BOOL         Send( unsigned char* ppayload, int nlength , int type);
 	BOOL         Receive( unsigned char* ppayload);
+	BOOL		 searchingRoutingTable(unsigned char* ipDst);
 	unsigned char* subnetMasking(unsigned char *hostIp);
 	unsigned char* getHostNetworkIp(unsigned char *ipDst);
 	unsigned char myIp[4];

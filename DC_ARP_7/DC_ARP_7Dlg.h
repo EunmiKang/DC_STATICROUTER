@@ -42,6 +42,7 @@ private :
 
 public:
 	unsigned char ipMyAddress[4]; // ip 설정 전역변수
+	int routingTableCount;
 	CListCtrl ARP_Cache;
 	CListCtrl Proxy_Cache;
 	CListCtrl Routing_Cache;

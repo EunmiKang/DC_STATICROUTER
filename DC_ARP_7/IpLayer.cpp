@@ -30,17 +30,15 @@ BOOL CIpLayer::Send( unsigned char* ppayload, int nlength , int type)
 
 BOOL CIpLayer::Receive( unsigned char* ppayload)
 {
-	BOOL bSuccess=FALSE;
 	PIP_HEADER pDatagram = (PIP_HEADER) ppayload;
 	unsigned char* maskedNetIp;
-	memcpy(maskedNetIp,subnetMasking(pDatagram->ip_dst),4); //목적지 IP를 마스킹하여 네트워크 Ip를 얻어낸다.
+	//memcpy(maskedNetIp,subnetMasking(pDatagram->ip_dst),4); //목적지 IP를 마스킹하여 네트워크 Ip를 얻어낸다.
 
-	if(searchingRoutingTable(maskedNetIp) < 0){
-		return bSuccess;
-	}else{
-		pDatagram->ip_dst
-	}
-	return bSuccess;
+	return searchingRoutingTable(pDatagram->ip_dst);
+}
+
+BOOL CIpLayer::searchingRoutingTable(unsigned char* ipDst){
+	return TRUE;
 }
 
 unsigned char* CIpLayer::subnetMasking(unsigned char *hostIp){

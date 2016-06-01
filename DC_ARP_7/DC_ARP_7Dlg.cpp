@@ -8,6 +8,7 @@
 #include "Proxy_Add_Dlg.h"
 #include "afxdialogex.h"
 #include "Routing_Add_Dlg.h"
+#include "IpLayer.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -24,9 +25,12 @@ CDC_ARP_7Dlg::CDC_ARP_7Dlg(CWnd* pParent /*=NULL*/)
 
    // 레이어 생성 및 관계설정
    m_LayerMgr.AddLayer( this );
+   m_LayerMgr.AddLayer( new CIpLayer("IpLayer"));
    m_LayerMgr.AddLayer( new CARPLayer("ARPLayer"));
    m_LayerMgr.AddLayer( new CEthernetLayer( "EthernetLayer"));
    m_LayerMgr.AddLayer( new CPacketDriverLayer( "PacketDriverLayer"));
+
+   routingTableCount=0; //라우팅 테이블 인덱스 초기화
 
    // dialog layer 와 ArpLayer를 연결
    m_LayerMgr.ConnectLayers("PacketDriverLayer ( *EthernetLayer ( *ARPLayer +IpLayer ( *DC_ARP_7 -ARPLayer ) ) )");
@@ -337,7 +341,9 @@ void CDC_ARP_7Dlg::GetNetWorkNameList()
 void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 {
 	Routing_Add_Dlg dlg;
-	dlg.DoModal();
+	if(dlg.DoModal()==1){
+		//CIpLayer::m_routingTable[routingTableCount]->
+	}
 }
 
 

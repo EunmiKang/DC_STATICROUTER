@@ -5,7 +5,7 @@
 #include "DC_ARP_7.h"
 #include "Routing_Add_Dlg.h"
 #include "afxdialogex.h"
-
+#include "IpLayer.h"
 
 // Routing_Add_Dlg 대화 상자입니다.
 
@@ -28,12 +28,16 @@ void Routing_Add_Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, Destination, dst_IP);
 	DDX_Control(pDX, Netmask, netmask_IP);
 	DDX_Control(pDX, Gateway, Gateway_IP);
+	DDX_Control(pDX, c_up, check_up);
+	DDX_Control(pDX, c_gateway, check_gateway);
+	DDX_Control(pDX, c_host, check_host);
+	DDX_Control(pDX, metric, metric_hop);
 }
 BOOL Routing_Add_Dlg::OnInitDialog(){
 
 	CDialogEx::OnInitDialog();
 
-	dst_IP.SetWindowText("255.255.255.0");
+	dst_IP.SetWindowText("192.168.0.0");
 	netmask_IP.SetWindowText("255.255.255.0");
 	Gateway_IP.SetWindowText("255.255.255.0");
 
@@ -43,6 +47,7 @@ BOOL Routing_Add_Dlg::OnInitDialog(){
 
 BEGIN_MESSAGE_MAP(Routing_Add_Dlg, CDialogEx)
 	ON_BN_CLICKED(add_Route_Table, &Routing_Add_Dlg::OnBnClickedaddRouteTable)
+
 END_MESSAGE_MAP()
 
 
@@ -54,3 +59,5 @@ void Routing_Add_Dlg::OnBnClickedaddRouteTable()
 
 	CDialogEx::OnOK();
 }
+
+
