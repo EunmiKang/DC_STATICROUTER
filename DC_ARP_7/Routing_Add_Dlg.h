@@ -31,4 +31,5 @@ public:
 	CCheckListBox check_host;
 	CComboBox interfaceList;
 	CEdit metric_hop;
+	afx_msg void OnEnChangemetric();
 };

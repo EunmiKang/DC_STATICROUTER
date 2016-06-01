@@ -31,7 +31,8 @@ void Routing_Add_Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, c_up, check_up);
 	DDX_Control(pDX, c_gateway, check_gateway);
 	DDX_Control(pDX, c_host, check_host);
-	DDX_Control(pDX, metric, metric_hop);
+	DDX_Control(pDX, c_interface, check_host);
+	DDX_Control(pDX, e_metric, metric_hop);
 }
 BOOL Routing_Add_Dlg::OnInitDialog(){
 

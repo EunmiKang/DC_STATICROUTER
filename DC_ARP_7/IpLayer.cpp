@@ -38,6 +38,9 @@ BOOL CIpLayer::Receive( unsigned char* ppayload)
 }
 
 BOOL CIpLayer::searchingRoutingTable(unsigned char* ipDst){
+	for(int i = 0; i < sizeof(CIpLayer::m_routingTable)/sizeof(CIpLayer::m_routingTable[0]);i++){
+
+	}
 	return TRUE;
 }
 
