@@ -23,7 +23,7 @@ public:
 	IP_HEADER   m_sHeader ;
 
 	typedef struct _STATIC_ROUTING_TABLE{
-		unsigned char*		destination;
+		unsigned char		destination[4];
 		unsigned char		netmask[4];
 		unsigned char		gateway[4];
 		char				flag[10];

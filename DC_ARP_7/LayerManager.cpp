@@ -30,7 +30,7 @@ void CLayerManager::AddLayer(CBaseLayer *pLayer)
 }
 
 CBaseLayer* CLayerManager::GetLayer(int nindex)
-{
+ {
    return mp_aLayers[ nindex ] ;
 }
 

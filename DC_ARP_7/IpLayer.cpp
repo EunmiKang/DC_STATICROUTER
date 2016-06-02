@@ -7,6 +7,8 @@ CIpLayer::CIpLayer(char* pName)
    :CBaseLayer( pName )
 {
    ResetHeader();
+   	for(int i=0;i<MAX_STATIC_ROUTING_TABLE;i++)
+		m_routingTable[i]= (STATIC_ROUTING_TABLE*) malloc (sizeof(STATIC_ROUTING_TABLE));
 }
 
 
@@ -76,6 +78,8 @@ unsigned char* CIpLayer::subnetMasking(unsigned char *hostIp){
 
 void CIpLayer::AddRoutingTable(int seq,unsigned char *networkIP , unsigned char *maskIP , unsigned char *gateway)
 {   //입력받은 내용들 Routing table에 추가
-
+	memcpy(m_routingTable[seq]->destination,networkIP,4);
+	memcpy(m_routingTable[seq]->destination,maskIP,4);
+	memcpy(m_routingTable[seq]->destination,networkIP,4);
 }
 

@@ -41,7 +41,7 @@ public:
 	unsigned char net_Ip[4];
 	unsigned char net_maskIp[4];
 	unsigned char gateway[4];
-	//flag
+	BOOL flag_list[3];
 	CString interfaceName;
 	int metric_num;
 	
