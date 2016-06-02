@@ -34,7 +34,7 @@ public:
 
 	void         ResetHeader();
 	/*******************/
-	void         AddRoutingTable(unsigned char *networkIP , unsigned char *maskIP , unsigned char *gateway);
+	void         AddRoutingTable(int seq,unsigned char *networkIP , unsigned char *maskIP , unsigned char *gateway);
 	/*************/
 	BOOL         Send( unsigned char* ppayload, int nlength , int type);
 	BOOL         Receive( unsigned char* ppayload);

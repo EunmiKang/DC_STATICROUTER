@@ -385,7 +385,7 @@ void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 		/* metric 복사 */
 		metric_num = dlg.metric_num;
 
-		((CIpLayer*)m_LayerMgr.GetLayer(2))->AddRoutingTable(networkIP , maskIP , gateway_a); // 받아온 IP와 MAC을 통해 proxy 정보를 추가하는 함수로 보내준다.
+		((CIpLayer*)m_LayerMgr.GetLayer(2))->AddRoutingTable(seq, networkIP , maskIP , gateway_a); // 받아온 IP와 MAC을 통해 proxy 정보를 추가하는 함수로 보내준다.
 	//	dlg.net_Ip
 	}
 }
