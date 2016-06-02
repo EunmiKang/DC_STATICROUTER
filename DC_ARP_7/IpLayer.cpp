@@ -16,6 +16,7 @@ CIpLayer::~CIpLayer(void)
 
 void CIpLayer::ResetHeader()
 {
+	
 	memset(m_sHeader.ip_dst,0,6);
 	memset(m_sHeader.ip_src,0,6);
 	m_sHeader.ip_ttl = 0;
@@ -55,8 +56,8 @@ BOOL CIpLayer::searchingRoutingTable(unsigned char* ipDst){
 		}else{ //¾øÀ» ¶§
 
 		}
-	}
 	return TRUE;
+	}
 }
 
 unsigned char* CIpLayer::subnetMasking(unsigned char *hostIp){

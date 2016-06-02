@@ -37,6 +37,7 @@
 
 #include <afxcontrolbars.h>     // MFC의 리본 및 컨트롤 막대 지원
 
+#define MAX_ADAPTER_INFO 10
 #define MAX_LAYER_NUMBER      0xff
 #define ETHER_MAX_SIZE         1514
 #define ETHER_HEADER_SIZE      14
@@ -49,9 +50,20 @@ extern char   AdapterList[10][1024];
 
 extern UCHAR macMyAddress[6];
 extern CString g_nicName;
+extern pcap_if_t *alldevs;
 extern UINT threadCapture(LPVOID pProc);
 extern UCHAR m_DstMac[6];
 extern UCHAR globalMacAddress[6];
+
+
+typedef struct _MAC_ADDR{			//Application에서 주소저장을 위한 구조체	
+	
+	char MacAddrDescrip[200];
+	char MacAddrName[200];
+	unsigned char *IpAddress;	
+	unsigned char MacAddress[6];			
+	
+}MAC_ADDR, *LPMAC_ADDR;
 
 
 #ifdef _UNICODE

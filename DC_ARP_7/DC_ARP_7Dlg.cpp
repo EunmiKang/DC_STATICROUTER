@@ -332,7 +332,7 @@ void CDC_ARP_7Dlg::GetNetWorkNameList()
 		}
 		temp++;
 	}
-		i = 3;
+		AdapterNum = i;
 	for( i = 0 ; AdapterList[0][i] != '\0'; i++);
 		g_nicName = CString(AdapterList[0],i);
 }
@@ -341,7 +341,9 @@ void CDC_ARP_7Dlg::GetNetWorkNameList()
 void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 {
 	Routing_Add_Dlg dlg;
-	dlg.DoModal();
+	if(dlg.DoModal()==1){
+		//dlg.net_Ip	
+	}
 }
 
 
