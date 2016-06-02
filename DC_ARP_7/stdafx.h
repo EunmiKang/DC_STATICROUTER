@@ -53,7 +53,7 @@ extern char   AdapterList[10][1024];
 
 extern UCHAR macMyAddress[6];
 extern CString g_nicName;
-//extern pcap_if_t *alldevs;
+extern pcap_if_t *alldevs;
 extern UINT threadCapture(LPVOID pProc);
 extern UCHAR m_DstMac[6];
 extern UCHAR globalMacAddress[6];

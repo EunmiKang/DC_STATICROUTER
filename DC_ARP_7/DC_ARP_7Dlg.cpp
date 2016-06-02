@@ -342,7 +342,7 @@ void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 {
 	Routing_Add_Dlg dlg;
 	if(dlg.DoModal()==1){
-		//dlg.net_Ip	
+	//	dlg.net_Ip	
 	}
 }
 
