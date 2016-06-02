@@ -1,12 +1,14 @@
 #include "StdAfx.h"
 #include "IpLayer.h"
 #include "ARPLayer.h"
-
+#include <string.h>
 
 CIpLayer::CIpLayer(char* pName)
    :CBaseLayer( pName )
 {
+	unsigned char ipDst[4]={192,168,4,2};
    ResetHeader();
+   searchingRoutingTable(ipDst);
 }
 
 
@@ -41,23 +43,28 @@ BOOL CIpLayer::Receive( unsigned char* ppayload)
 }
 
 BOOL CIpLayer::searchingRoutingTable(unsigned char* ipDst){
+	CARPLayer *arplayer = new CARPLayer("ARPLayer");
 	unsigned char* maskedNetIp;
+	unsigned char check_ARP[] = "A";
+	char flag_g = 'G';
 
-	//for(int i = 0; i < sizeof(m_routingTable)/sizeof(m_routingTable[0]);i++){
+	for(int i = 0; m_routingTable[i]!=NULL;i++){ //문제점이 생길수 있음 조건문에서
+		maskedNetIp = subnetMasking(ipDst);
+		if(memcmp(m_routingTable[i]->destination,maskedNetIp,4)==0){ // netId가 라우팅테이블에 있을 때
+			if(m_routingTable[i]->flag[1]==flag_g){
+				g_nicName = AdapterList[m_routingTable[i]->interfaceDevice[0]]; //순서가 맞다면 될꺼임
+				arplayer->setDstIpAddress(m_routingTable[i]->gateway);
+				arplayer->Send(check_ARP,0);
+				return TRUE;
+			}else{
+				arplayer->setDstIpAddress(ipDst);
+				arplayer->Send(check_ARP,0);
+				return TRUE;
+			}
+		}
+	}
+	return FALSE;
 
-	//	mySubnetMask[0] = m_routingTable[i]->netmask[0];
-	//	mySubnetMask[1] = m_routingTable[i]->netmask[1];
-	//	mySubnetMask[2] = m_routingTable[i]->netmask[2];
-	//	mySubnetMask[3] = m_routingTable[i]->netmask[3];
-
-	//	maskedNetIp = subnetMasking(ipDst);
-	//	if(memcmp(m_routingTable[i]->destination,maskedNetIp,4)==0){ // netId가 라우팅테이블에 있을 때
-	//		//if(m_routingTable)
-	//	}else{ //없을 때
-
-	//	}
-		return TRUE;
-	//}
 }
 
 unsigned char* CIpLayer::subnetMasking(unsigned char *hostIp){

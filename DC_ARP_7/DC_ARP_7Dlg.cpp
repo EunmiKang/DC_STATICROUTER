@@ -342,8 +342,7 @@ void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 {
 	Routing_Add_Dlg dlg;
 	if(dlg.DoModal()==1){
-		
-		
+	
 		CString seq_string;
 		seq_string.Format(_T("%d"),seq); 
 		
@@ -364,7 +363,8 @@ void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 		Routing_Cache.SetItem(seq,4,LVIF_TEXT,file,0,0,0,NULL);
 
 		seq++;
-		
+
+	//	dlg.net_Ip	
 	}
 }
 

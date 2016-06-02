@@ -8,7 +8,7 @@
 #include "IpLayer.h"
 #include "Packet32.h"
 #include "afxmt.h"
-
+#include <typeinfo>
 // Routing_Add_Dlg 대화 상자입니다.
 
 IMPLEMENT_DYNAMIC(Routing_Add_Dlg, CDialogEx)
@@ -51,7 +51,7 @@ BOOL Routing_Add_Dlg::OnInitDialog(){
 }
 
 void Routing_Add_Dlg::GetMacAddr(){
-	
+
     pcap_if_t *d;
     int i=0;
     char errbuf[PCAP_ERRBUF_SIZE];
@@ -83,7 +83,7 @@ void Routing_Add_Dlg::GetMacAddr(){
         printf("\nNo interfaces found! Make sure WinPcap is installed.\n");
         return;
     }
-
+	g_nicName = alldevs[0].name; //test해야함
     /* We don't need any more the device list. Free it */
     pcap_freealldevs(alldevs);
 	i = 0;
