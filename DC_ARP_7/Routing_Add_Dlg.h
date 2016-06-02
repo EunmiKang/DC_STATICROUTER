@@ -41,6 +41,9 @@ public:
 	unsigned char net_Ip[4];
 	unsigned char net_maskIp[4];
 	unsigned char gateway[4];
-
+	//flag
+	CString interfaceName;
+	int metric_num;
 	
+	afx_msg void OnEnChangemetric();
 };

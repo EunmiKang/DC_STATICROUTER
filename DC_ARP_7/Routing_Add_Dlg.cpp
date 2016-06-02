@@ -43,10 +43,8 @@ BOOL Routing_Add_Dlg::OnInitDialog(){
 	dst_IP.SetWindowText("192.168.0.0");
 	netmask_IP.SetWindowText("255.255.255.0");
 	Gateway_IP.SetWindowText("연결됨");
-
-	UpdateData(TRUE);
-	
 	GetMacAddr();
+	UpdateData(TRUE);
 
 	return TRUE;
 }
@@ -73,6 +71,7 @@ void Routing_Add_Dlg::GetMacAddr(){
 			strcat(temp," - ");
 			strcat(temp,d->description); 
 			interface_List.AddString(temp);
+			interface_List.SetCurSel(0);
 		}
         else
             printf(" (No description available)\n");
@@ -127,12 +126,13 @@ char* Routing_Add_Dlg::MacAddrNtoS(unsigned char *MAC)
 BEGIN_MESSAGE_MAP(Routing_Add_Dlg, CDialogEx)
 	ON_BN_CLICKED(add_Route_Table, &Routing_Add_Dlg::OnBnClickedaddRouteTable)
 
+	ON_EN_CHANGE(e_metric, &Routing_Add_Dlg::OnEnChangemetric)
 END_MESSAGE_MAP()
 
 
 // Routing_Add_Dlg 메시지 처리기입니다.
 
-
+/************************************************************************************/
 void Routing_Add_Dlg::OnBnClickedaddRouteTable()
 {
 	BYTE nField0 , nField1 , nField2 , nField3;            //IP를 잘라서 보관하기 위한 임시변수
@@ -161,7 +161,24 @@ void Routing_Add_Dlg::OnBnClickedaddRouteTable()
 	memcpy(gateway,ipAddress,4);
 
 
+
+	GetDlgItemText(interfaceList,interfaceName);
+
+	metric_num = GetDlgItemInt(e_metric);
+
 	CDialogEx::OnOK();
 }
+/**************************************************************************/
 
 
+
+
+void Routing_Add_Dlg::OnEnChangemetric()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}

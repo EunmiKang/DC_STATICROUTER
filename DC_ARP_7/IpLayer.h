@@ -33,6 +33,9 @@ public:
 	 PSTATIC_ROUTING_TABLE m_routingTable[MAX_STATIC_ROUTING_TABLE];
 
 	void         ResetHeader();
+	/*******************/
+	void         AddRoutingTable(unsigned char *networkIP , unsigned char *maskIP , unsigned char *gateway);
+	/*************/
 	BOOL         Send( unsigned char* ppayload, int nlength , int type);
 	BOOL         Receive( unsigned char* ppayload);
 	BOOL		 searchingRoutingTable(unsigned char* ipDst);
@@ -41,7 +44,6 @@ public:
 	unsigned char myIp[4];
 	unsigned char mySubnetMask[4];
 	unsigned char myGateWay[4];
-
 
 	CIpLayer(char* pName);
 	~CIpLayer(void);

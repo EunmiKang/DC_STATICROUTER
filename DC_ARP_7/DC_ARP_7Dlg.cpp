@@ -337,15 +337,40 @@ void CDC_ARP_7Dlg::GetNetWorkNameList()
 		g_nicName = CString(AdapterList[0],i);
 }
 
-
+/********************************************************/
 void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 {
 	Routing_Add_Dlg dlg;
-	if(dlg.DoModal()==1){
-		//dlg.net_Ip	
+	
+	unsigned char networkIP[4]; 
+	unsigned char maskIP[4];
+	unsigned char gateway[4];
+	CString checkd_flag;
+	CString interfaceName;
+	int metric_num;
+
+	/* routing table 자료구조에 입력받은 값들 추가 */
+	if(dlg.DoModal()==1){ 
+		
+		memcpy(networkIP , dlg.net_Ip , 4); //Routing dialog에 적은 network ip 주소를 networkIP로 복사하여 받아온다.
+		memcpy(maskIP , dlg.net_maskIp , 4); // Routing dialog에 적은 mask ip 주소를 maskIP으로 복사하여 받아온다.
+		
+		/* flag에 Gateway가 체크 안 되어있으면 연결됨으로, 체크 되어있으면 입력받은 gateway값 복사 */
+		memcpy(gateway , dlg.gateway , 4); // Routing dialog에 적은 을 gateway으로 복사하여 받아온다.
+
+		/* flag UP에 체크되어있으면 U로 Gateway에 체크 되어있으면 G로 Host에 체크되어있으면 H로 */
+		//if()
+		
+		/* interface 복사 */
+		interfaceName = dlg.interfaceName; 
+
+		/* metric 복사 */
+		metric_num = dlg.metric_num;
+
+		((CIpLayer*)m_LayerMgr.GetLayer(2))->AddRoutingTable(networkIP , maskIP , gateway); // 받아온 IP와 MAC을 통해 proxy 정보를 추가하는 함수로 보내준다.
 	}
 }
-
+/********************************************************/
 
 void CDC_ARP_7Dlg::OnBnClickedRoutingdeleteBtn()
 {

@@ -69,3 +69,18 @@ unsigned char* CIpLayer::subnetMasking(unsigned char *hostIp){
 	return result;
 }
 
+void CIpLayer::AddRoutingTable(unsigned char *networkIP , unsigned char *maskIP , unsigned char *gateway)
+{   //입력받은 내용들 Routing table에 추가
+   STATIC_ROUTING_TABLE temp;
+   int i;
+   /*
+   CString interfaceName;
+   interfaceName = devName; 
+   temp.devName = devName;
+   memcpy(temp.proxyIP , ip , 4);
+   memcpy(temp.proxyMac , mac , 6);
+   proxy_table.AddTail(temp);
+
+   updateProxyList();*/
+}
+

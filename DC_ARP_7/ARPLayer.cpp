@@ -378,7 +378,7 @@ void CARPLayer::AddProxy(CString devName , unsigned char *ip , unsigned char *ma
    ProxyItem temp;
    int i;
    
-   CString Name ,  Ip , Mac ;
+   CString Name;
    Name = devName; 
    temp.devName = devName;
    memcpy(temp.proxyIP , ip , 4);
