@@ -43,21 +43,21 @@ BOOL CIpLayer::Receive( unsigned char* ppayload)
 BOOL CIpLayer::searchingRoutingTable(unsigned char* ipDst){
 	unsigned char* maskedNetIp;
 
-	for(int i = 0; i < sizeof(m_routingTable)/sizeof(m_routingTable[0]);i++){
+	//for(int i = 0; i < sizeof(m_routingTable)/sizeof(m_routingTable[0]);i++){
 
-		mySubnetMask[0] = m_routingTable[i]->netmask[0];
-		mySubnetMask[1] = m_routingTable[i]->netmask[1];
-		mySubnetMask[2] = m_routingTable[i]->netmask[2];
-		mySubnetMask[3] = m_routingTable[i]->netmask[3];
+	//	mySubnetMask[0] = m_routingTable[i]->netmask[0];
+	//	mySubnetMask[1] = m_routingTable[i]->netmask[1];
+	//	mySubnetMask[2] = m_routingTable[i]->netmask[2];
+	//	mySubnetMask[3] = m_routingTable[i]->netmask[3];
 
-		maskedNetIp = subnetMasking(ipDst);
-		if(memcmp(m_routingTable[i]->destination,maskedNetIp,4)==0){ // netId가 라우팅테이블에 있을 때
-			//if(m_routingTable)
-		}else{ //없을 때
+	//	maskedNetIp = subnetMasking(ipDst);
+	//	if(memcmp(m_routingTable[i]->destination,maskedNetIp,4)==0){ // netId가 라우팅테이블에 있을 때
+	//		//if(m_routingTable)
+	//	}else{ //없을 때
 
-		}
+	//	}
 		return TRUE;
-	}
+	//}
 }
 
 unsigned char* CIpLayer::subnetMasking(unsigned char *hostIp){

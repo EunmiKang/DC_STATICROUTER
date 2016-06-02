@@ -42,7 +42,6 @@ BOOL Routing_Add_Dlg::OnInitDialog(){
 
 	dst_IP.SetWindowText("192.168.0.0");
 	netmask_IP.SetWindowText("255.255.255.0");
-	Gateway_IP.SetWindowText("¿¬°áµÊ");
 
 	UpdateData(TRUE);
 	
@@ -128,7 +127,8 @@ void Routing_Add_Dlg::OnBnClickedaddRouteTable()
 	ipAddress[2] = nField2;
 	ipAddress[3] = nField3;
 	memcpy(gateway,ipAddress,4);
-
+	
+	
 
 	CDialogEx::OnOK();
 }
