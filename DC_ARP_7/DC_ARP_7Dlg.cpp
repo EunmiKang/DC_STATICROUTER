@@ -346,11 +346,25 @@ void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 	unsigned char networkIP[4]; 
 	unsigned char maskIP[4];
 	unsigned char gateway_a[4];
-	CString checkd_flag;
+	CString checked_flag = "";
 	CString interfaceName;
 	int metric_num;
 	if(dlg.DoModal()==1){
 	
+		/* flag UP에 체크되어있으면 U로 Gateway에 체크 되어있으면 G로 Host에 체크되어있으면 H로 */
+		if(dlg.flag_list[0] == TRUE) 
+		  {
+			 checked_flag += "U";
+		  }
+		  if(dlg.flag_list[1] == TRUE)
+		  {
+			 checked_flag += "G";
+		  }
+		  if(dlg.flag_list[2] == TRUE)
+		  {
+			 checked_flag += "H";
+		  }
+
 		CString seq_string;
 		seq_string.Format(_T("%d"),seq); 
 		
@@ -359,27 +373,39 @@ void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 		CString ipAddress;
 		CString maskIp;
 		CString gateway;
-		
+
 		ipAddress.Format("%d.%d.%d.%d" , dlg.net_Ip[0] , dlg.net_Ip[1] , dlg.net_Ip[2] , dlg.net_Ip[3] );
 		maskIp.Format("%d.%d.%d.%d" , dlg.net_maskIp[0] , dlg.net_maskIp[1] , dlg.net_maskIp[2] , dlg.net_maskIp[3] );
 		gateway.Format("%d.%d.%d.%d" , dlg.gateway[0] , dlg.gateway[1] , dlg.gateway[2] , dlg.gateway[3] );
+
+		if(dlg.flag_list[1] == TRUE){
 		
 		Routing_Cache.InsertItem(seq,seq_string);
 		Routing_Cache.SetItem(seq,0,LVIF_TEXT,ipAddress,0,0,0,0,NULL);
 		Routing_Cache.SetItem(seq,1,LVIF_TEXT,maskIp,0,0,0,0,NULL);
 		Routing_Cache.SetItem(seq,2,LVIF_TEXT,gateway,0,0,0,NULL);
-		Routing_Cache.SetItem(seq,3,LVIF_TEXT,metricnum,0,0,0,NULL);
+		Routing_Cache.SetItem(seq,3,LVIF_TEXT,checked_flag,0,0,0,NULL);
 		Routing_Cache.SetItem(seq,4,LVIF_TEXT,dlg.interfaceName,0,0,0,NULL);
 		Routing_Cache.SetItem(seq,5,LVIF_TEXT,metricnum,0,0,0,NULL);
 		seq++;
+		
+		}
+		
+		else{
+		Routing_Cache.InsertItem(seq,seq_string);
+		Routing_Cache.SetItem(seq,0,LVIF_TEXT,ipAddress,0,0,0,0,NULL);
+		Routing_Cache.SetItem(seq,1,LVIF_TEXT,maskIp,0,0,0,0,NULL);
+		Routing_Cache.SetItem(seq,2,LVIF_TEXT,"연결됨",0,0,0,NULL);
+		Routing_Cache.SetItem(seq,3,LVIF_TEXT,checked_flag,0,0,0,NULL);
+		Routing_Cache.SetItem(seq,4,LVIF_TEXT,dlg.interfaceName,0,0,0,NULL);
+		Routing_Cache.SetItem(seq,5,LVIF_TEXT,metricnum,0,0,0,NULL);
+		seq++;
+		}
 		memcpy(networkIP , dlg.net_Ip , 4); //Routing dialog에 적은 network ip 주소를 networkIP로 복사하여 받아온다.
 		memcpy(maskIP , dlg.net_maskIp , 4); // Routing dialog에 적은 mask ip 주소를 maskIP으로 복사하여 받아온다.
 		
 		/* flag에 Gateway가 체크 안 되어있으면 연결됨으로, 체크 되어있으면 입력받은 gateway값 복사 */
-		memcpy(gateway_a , dlg.gateway , 4); // Routing dialog에 적은 을 gateway으로 복사하여 받아온다.
-
-		/* flag UP에 체크되어있으면 U로 Gateway에 체크 되어있으면 G로 Host에 체크되어있으면 H로 */
-		//if()
+		memcpy(gateway_a, dlg.gateway , 4); // Routing dialog에 적은 을 gateway으로 복사하여 받아온다.
 		
 		/* interface 복사 */
 		interfaceName = dlg.interfaceName; 

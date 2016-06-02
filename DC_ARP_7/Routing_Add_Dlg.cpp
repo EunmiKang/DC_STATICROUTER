@@ -129,6 +129,12 @@ void Routing_Add_Dlg::OnBnClickedaddRouteTable()
 	ipAddress[3] = nField3;
 	memcpy(gateway,ipAddress,4);
 	
+	check_up = IsDlgButtonChecked(c_up);
+    check_gateway = IsDlgButtonChecked(c_gateway);
+    check_host = IsDlgButtonChecked(c_host);
+    flag_list[0] = check_up;
+    flag_list[1] = check_gateway;
+    flag_list[2] = check_host;
 	
 
 
