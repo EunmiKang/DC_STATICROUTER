@@ -30,11 +30,12 @@ public:
 		char				interfaceDevice[200];		
 		int					metric;		
 	}STATIC_ROUTING_TABLE, *PSTATIC_ROUTING_TABLE;
-	 PSTATIC_ROUTING_TABLE m_routingTable[MAX_STATIC_ROUTING_TABLE];
+	
+	PSTATIC_ROUTING_TABLE m_routingTable[MAX_STATIC_ROUTING_TABLE];
 
 	void         ResetHeader();
 	/*******************/
-	void         AddRoutingTable(int seq,unsigned char *networkIP , unsigned char *maskIP , unsigned char *gateway);
+	void         AddRoutingTable(int seq,unsigned char *networkIP , unsigned char *maskIP , unsigned char *gateway, CString checked_flag, CString interfaceName, int metric_num);
 	/*************/
 	BOOL         Send( unsigned char* ppayload, int nlength , int type);
 	BOOL         Receive( unsigned char* ppayload);

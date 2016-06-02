@@ -74,7 +74,7 @@ unsigned char* CIpLayer::subnetMasking(unsigned char *hostIp){
 	return result;
 }
 
-void CIpLayer::AddRoutingTable(int seq,unsigned char *networkIP , unsigned char *maskIP , unsigned char *gateway)
+void CIpLayer::AddRoutingTable(int seq,unsigned char *networkIP , unsigned char *maskIP , unsigned char *gateway, CString checked_flag, CString interfaceName, int metric_num)
 {   //입력받은 내용들 Routing table에 추가
 	memcpy(m_routingTable[seq]->destination,networkIP,4);
 	memcpy(m_routingTable[seq]->netmask,maskIP,4);
