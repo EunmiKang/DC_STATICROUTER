@@ -52,7 +52,7 @@ BOOL Routing_Add_Dlg::OnInitDialog(){
 }
 
 void Routing_Add_Dlg::GetMacAddr(){
-	
+	pcap_if_t *alldevs;
     pcap_if_t *d;
     int i=0;
     char errbuf[PCAP_ERRBUF_SIZE];
