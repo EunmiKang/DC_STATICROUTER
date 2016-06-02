@@ -36,9 +36,6 @@ BOOL CIpLayer::Send( unsigned char* ppayload, int nlength , int type)
 BOOL CIpLayer::Receive( unsigned char* ppayload)
 {
 	PIP_HEADER pDatagram = (PIP_HEADER) ppayload;
-
-	//memcpy(maskedNetIp,subnetMasking(pDatagram->ip_dst),4); //목적지 IP를 마스킹하여 네트워크 Ip를 얻어낸다.
-
 	return searchingRoutingTable(pDatagram->ip_dst);
 }
 
@@ -76,10 +73,13 @@ unsigned char* CIpLayer::subnetMasking(unsigned char *hostIp){
 	return result;
 }
 
-void CIpLayer::AddRoutingTable(int seq,unsigned char *networkIP , unsigned char *maskIP , unsigned char *gateway)
+void CIpLayer::AddRoutingTable(int seq,unsigned char *networkIP , unsigned char *maskIP , unsigned char *gateway, CString checked_flag, CString interfaceName, int metric_num)
 {   //입력받은 내용들 Routing table에 추가
 	memcpy(m_routingTable[seq]->destination,networkIP,4);
-	memcpy(m_routingTable[seq]->destination,maskIP,4);
-	memcpy(m_routingTable[seq]->destination,networkIP,4);
+	memcpy(m_routingTable[seq]->netmask,maskIP,4);
+	memcpy(m_routingTable[seq]->gateway,gateway,4);
+	memcpy(m_routingTable[seq]->flag,(LPSTR)(LPCSTR)checked_flag,checked_flag.GetLength());
+	memcpy(m_routingTable[seq]->interfaceDevice,(LPSTR)(LPCSTR)interfaceName,interfaceName.GetLength());
+	m_routingTable[seq]->metric = metric_num;
 }
 

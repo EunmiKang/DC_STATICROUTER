@@ -387,7 +387,6 @@ void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 		Routing_Cache.SetItem(seq,3,LVIF_TEXT,checked_flag,0,0,0,NULL);
 		Routing_Cache.SetItem(seq,4,LVIF_TEXT,dlg.interfaceName,0,0,0,NULL);
 		Routing_Cache.SetItem(seq,5,LVIF_TEXT,metricnum,0,0,0,NULL);
-		seq++;
 		
 		}
 		else{
@@ -398,13 +397,18 @@ void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 		Routing_Cache.SetItem(seq,3,LVIF_TEXT,checked_flag,0,0,0,NULL);
 		Routing_Cache.SetItem(seq,4,LVIF_TEXT,dlg.interfaceName,0,0,0,NULL);
 		Routing_Cache.SetItem(seq,5,LVIF_TEXT,metricnum,0,0,0,NULL);
-		seq++;
 		}
 		memcpy(networkIP , dlg.net_Ip , 4); //Routing dialog에 적은 network ip 주소를 networkIP로 복사하여 받아온다.
 		memcpy(maskIP , dlg.net_maskIp , 4); // Routing dialog에 적은 mask ip 주소를 maskIP으로 복사하여 받아온다.
 		
 		/* flag에 Gateway가 체크 안 되어있으면 연결됨으로, 체크 되어있으면 입력받은 gateway값 복사 */
-		memcpy(gateway_a, dlg.gateway , 4); // Routing dialog에 적은 을 gateway으로 복사하여 받아온다.
+		if(dlg.flag_list[1] == TRUE){
+			memcpy(gateway_a, dlg.gateway , 4);
+		}
+		else
+		{
+			/*gateway_a = "연결됨";*/
+		}
 		
 		/* interface 복사 */
 		interfaceName = dlg.interfaceName; 
@@ -412,7 +416,7 @@ void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 		/* metric 복사 */
 		metric_num = dlg.metric_num;
 
- 		((CIpLayer*)m_LayerMgr.GetLayer(2))->AddRoutingTable(seq, networkIP , maskIP , gateway_a); // 받아온 IP와 MAC을 통해 proxy 정보를 추가하는 함수로 보내준다.
+		((CIpLayer*)m_LayerMgr.GetLayer(2))->AddRoutingTable(seq, networkIP , maskIP , gateway_a, checked_flag, interfaceName, metric_num);
 		seq++;
 	}
 }
