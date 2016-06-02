@@ -21,6 +21,7 @@ CDC_ARP_7Dlg::CDC_ARP_7Dlg(CWnd* pParent /*=NULL*/)
    : CDialogEx(CDC_ARP_7Dlg::IDD, pParent),
    CBaseLayer("DC_ARP_7Dlg")
 {
+   seq = 0 ;
    m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
    // 레이어 생성 및 관계설정
@@ -340,7 +341,7 @@ void CDC_ARP_7Dlg::GetNetWorkNameList()
 
 void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 {
-	int seq = 0;
+
 	Routing_Add_Dlg dlg;
 	unsigned char networkIP[4]; 
 	unsigned char maskIP[4];
@@ -353,8 +354,8 @@ void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 		CString seq_string;
 		seq_string.Format(_T("%d"),seq); 
 		
-		CString comment=_T("없음"); 
-		CString file=_T("파일경로");
+		CString metricnum;
+		metricnum.Format(_T("%d"),dlg.metric_num);
 		CString ipAddress;
 		CString maskIp;
 		CString gateway;
@@ -362,13 +363,14 @@ void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 		ipAddress.Format("%d.%d.%d.%d" , dlg.net_Ip[0] , dlg.net_Ip[1] , dlg.net_Ip[2] , dlg.net_Ip[3] );
 		maskIp.Format("%d.%d.%d.%d" , dlg.net_maskIp[0] , dlg.net_maskIp[1] , dlg.net_maskIp[2] , dlg.net_maskIp[3] );
 		gateway.Format("%d.%d.%d.%d" , dlg.gateway[0] , dlg.gateway[1] , dlg.gateway[2] , dlg.gateway[3] );
+		
 		Routing_Cache.InsertItem(seq,seq_string);
 		Routing_Cache.SetItem(seq,0,LVIF_TEXT,ipAddress,0,0,0,0,NULL);
 		Routing_Cache.SetItem(seq,1,LVIF_TEXT,maskIp,0,0,0,0,NULL);
 		Routing_Cache.SetItem(seq,2,LVIF_TEXT,gateway,0,0,0,NULL);
-		Routing_Cache.SetItem(seq,3,LVIF_TEXT,comment,0,0,0,NULL);
-		Routing_Cache.SetItem(seq,4,LVIF_TEXT,file,0,0,0,NULL);
-
+		Routing_Cache.SetItem(seq,3,LVIF_TEXT,metricnum,0,0,0,NULL);
+		Routing_Cache.SetItem(seq,4,LVIF_TEXT,dlg.interfaceName,0,0,0,NULL);
+		Routing_Cache.SetItem(seq,5,LVIF_TEXT,metricnum,0,0,0,NULL);
 		seq++;
 		memcpy(networkIP , dlg.net_Ip , 4); //Routing dialog에 적은 network ip 주소를 networkIP로 복사하여 받아온다.
 		memcpy(maskIP , dlg.net_maskIp , 4); // Routing dialog에 적은 mask ip 주소를 maskIP으로 복사하여 받아온다.

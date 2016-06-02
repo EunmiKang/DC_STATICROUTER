@@ -37,7 +37,7 @@ public:
 	BOOL check_host;
 	CEdit metric_hop;
 	CComboBox interface_List;
-
+	int seq;
 	unsigned char net_Ip[4];
 	unsigned char net_maskIp[4];
 	unsigned char gateway[4];
