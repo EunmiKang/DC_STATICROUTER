@@ -44,7 +44,7 @@ BOOL CIpLayer::searchingRoutingTable(unsigned char* ipDst){
 	unsigned char* maskedNetIp;
 
 	for(int i = 0; i < sizeof(m_routingTable)/sizeof(m_routingTable[0]);i++){
-		
+
 		mySubnetMask[0] = m_routingTable[i]->netmask[0];
 		mySubnetMask[1] = m_routingTable[i]->netmask[1];
 		mySubnetMask[2] = m_routingTable[i]->netmask[2];
@@ -56,7 +56,7 @@ BOOL CIpLayer::searchingRoutingTable(unsigned char* ipDst){
 		}else{ //¾øÀ» ¶§
 
 		}
-	return TRUE;
+		return TRUE;
 	}
 }
 

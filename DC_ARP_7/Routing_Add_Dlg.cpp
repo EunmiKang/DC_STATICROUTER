@@ -73,6 +73,7 @@ void Routing_Add_Dlg::GetMacAddr(){
 			strcat(temp," - ");
 			strcat(temp,d->description); 
 			interface_List.AddString(temp);
+			interface_List.SetCurSel(0);
 		}
         else
             printf(" (No description available)\n");
@@ -92,38 +93,6 @@ void Routing_Add_Dlg::GetMacAddr(){
 	
 }
 
-unsigned char* Routing_Add_Dlg::IpAddrStoN(char* IpString)
-{
-	unsigned char *result=(unsigned char*)malloc(sizeof(char)*4);	
-	char *temp=IpString;
-	char ip[4];
-	int n=0;	
-	
-	while(*temp!='\0'){	
-		while(*temp != '.' && *temp !='\0'){	//'.'단위로 나누어서 문자를 10진수숫자로 바꾼다.
-			ip[n++]= *temp;						//숫자로 바뀐값을 변수에 저장해서 리턴
-			temp++;
-		}
-		ip[n]='\0';		
-		n=0;
-		*result=(unsigned char)strtol(ip,NULL,10);
-		result++;
-		if(*temp=='\0'){
-			result-=4;							//4바이트 
-			return result;
-		}
-		temp++;
-	}
-	AfxMessageBox("IP주소 바꾸다가 에러 발생-_-;");
-	return NULL;
-}
-
-char* Routing_Add_Dlg::MacAddrNtoS(unsigned char *MAC)
-{
-	char *Result=(char*)malloc(sizeof(char)*20);
-	sprintf(Result,"%.2X:%.2X:%.2X:%.2X:%.2X:%.2X",MAC[0],MAC[1],MAC[2],MAC[3],MAC[4],MAC[5]);
-	return Result;
-}
 BEGIN_MESSAGE_MAP(Routing_Add_Dlg, CDialogEx)
 	ON_BN_CLICKED(add_Route_Table, &Routing_Add_Dlg::OnBnClickedaddRouteTable)
 
