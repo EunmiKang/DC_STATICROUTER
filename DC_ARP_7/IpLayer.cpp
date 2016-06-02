@@ -22,7 +22,7 @@ void CIpLayer::ResetHeader()
 	m_sHeader.ip_ttl = 0;
 	m_sHeader.ip_proto = 0;
 	memset(mySubnetMask,0,4);
-	memset(m_routingTable,0,sizeof(m_routingTable));
+	
 }
 BOOL CIpLayer::Send( unsigned char* ppayload, int nlength , int type)
 {
@@ -76,8 +76,6 @@ unsigned char* CIpLayer::subnetMasking(unsigned char *hostIp){
 
 void CIpLayer::AddRoutingTable(int seq,unsigned char *networkIP , unsigned char *maskIP , unsigned char *gateway)
 {   //입력받은 내용들 Routing table에 추가
-	memcpy(m_routingTable[seq]->destination,networkIP,4);
-	memcpy(m_routingTable[seq]->netmask,maskIP,4);
-	memcpy(m_routingTable[seq]->gateway,gateway,4);
+
 }
 

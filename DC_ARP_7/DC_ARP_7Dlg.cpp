@@ -371,7 +371,7 @@ void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 		Routing_Cache.SetItem(seq,3,LVIF_TEXT,metricnum,0,0,0,NULL);
 		Routing_Cache.SetItem(seq,4,LVIF_TEXT,dlg.interfaceName,0,0,0,NULL);
 		Routing_Cache.SetItem(seq,5,LVIF_TEXT,metricnum,0,0,0,NULL);
-		seq++;
+
 		memcpy(networkIP , dlg.net_Ip , 4); //Routing dialog에 적은 network ip 주소를 networkIP로 복사하여 받아온다.
 		memcpy(maskIP , dlg.net_maskIp , 4); // Routing dialog에 적은 mask ip 주소를 maskIP으로 복사하여 받아온다.
 		
@@ -387,8 +387,8 @@ void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 		/* metric 복사 */
 		metric_num = dlg.metric_num;
 
-		((CIpLayer*)m_LayerMgr.GetLayer(2))->AddRoutingTable(seq, networkIP , maskIP , gateway_a); // 받아온 IP와 MAC을 통해 proxy 정보를 추가하는 함수로 보내준다.
-	//	dlg.net_Ip
+ 		((CIpLayer*)m_LayerMgr.GetLayer(2))->AddRoutingTable(seq, networkIP , maskIP , gateway_a); // 받아온 IP와 MAC을 통해 proxy 정보를 추가하는 함수로 보내준다.
+		seq++;
 	}
 }
 /********************************************************/
