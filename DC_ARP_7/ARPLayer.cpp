@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ARPLayer.h"
 #include "DC_ARP_7Dlg.h"
-
+#include "IPLayer.h"
 const DWORD CARPLayer::nRegArpSendMsg = ::RegisterWindowMessage( "ARP Send Message" ); //메세지 등록
 const DWORD CARPLayer::nRegKillRestartTimerMsg = ::RegisterWindowMessage( "ARP Send Kill Timer "); //메세지등록
 
@@ -179,6 +179,43 @@ BOOL CARPLayer::Receive(unsigned char* ppayload) //ARP를 받아서 처리하는 함수
          }
          proxy_table.GetNext(Proxy_Node);
       }
+	  unsigned char maskedNetIp[4];
+	  for(int i = 0; i < routingTableCount;i++){ //문제점이 생길수 있음 조건문에서
+		  for(int j =0 ; j < 4; j++){
+			  mySubnetMask[j] = m_routingTable[i]->netmask[j];
+			  maskedNetIp[j] = mySubnetMask[j] & m_sHeader.target_ip_address[j];
+		  }
+		  if(maskedNetIp[0]==0)
+			  return FALSE;
+		  unsigned char a = maskedNetIp[0];
+		  unsigned char b =maskedNetIp[1];
+		  unsigned char c =maskedNetIp[2];
+		  unsigned char d =maskedNetIp[3];
+		  if(memcmp(m_routingTable[i]->destination,maskedNetIp,4)==0){ // netId가 라우팅테이블에 있을 때
+			            m_sHeader.hard_type = htons(0x0001);
+            m_sHeader.prot_type = htons(0x0800);
+            m_sHeader.hard_size = 6;
+            m_sHeader.prot_size = 4;
+            m_sHeader.op = htons(0x0002);//reply
+
+            memcpy( m_sHeader.sender_mac_address , macMyAddress , 6);
+            memcpy( m_sHeader.sender_ip_address , pFrame->target_ip_address , 4);
+            memcpy( m_sHeader.target_ip_address , pFrame->sender_ip_address , 4);
+            memcpy( m_sHeader.target_mac_address , pFrame->sender_mac_address , 6);
+            // Mac 주소는 라우터 역할이 된 것의 Mac주소를 보낸다.
+            if(SearchCacheTable() == -1)
+            {  //cache table에 존재하지 않으면 정보들을 저장.(받는 입장에서)
+               CacheTable input;
+               memcpy(input.ipAddress , pFrame->sender_ip_address , 4);
+               memcpy(input.macAddress , pFrame->sender_mac_address , 6);
+               input.state = "complete";
+               input.ttl = 170;
+               cache_table.AddTail(input); //cache table에 존재하지 않으면 정보들을 저장.
+               updateList();
+            }
+            return mp_UnderLayer->Send((unsigned char*)&m_sHeader , sizeof(m_sHeader), 0x02);
+		  }
+	  }
    }//proxy 끝.
     else if(ntohs(pFrame->op) == 0x0002 &&
       memcmp(pFrame->target_ip_address, m_sHeader.sender_ip_address, 4) == 0)
@@ -352,6 +389,8 @@ void CARPLayer::TableTimer() //ARP Table 엔트리들의 ttl 값을 1씩 감소시킴.
 
    if( cache_table.GetCount() != 0 )
    {
+	   if(cache_table.GetCount()>10000)
+		   return;
       for( int i=0; i<cache_table.GetCount(); i++ )  //Table에 있는 엔트리 수만큼 반복
       {
          cache_table.GetAt(entry).ttl--;   // ttl 값을 1초씩 줄임

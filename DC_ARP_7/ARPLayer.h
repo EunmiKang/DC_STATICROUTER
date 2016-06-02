@@ -1,5 +1,6 @@
 #pragma once
 #include "baselayer.h"
+#include "IpLayer.h"
 class CARPLayer :
    public CBaseLayer
 {

@@ -9,6 +9,7 @@ CIpLayer::CIpLayer(char* pName)
    ResetHeader();
    	for(int i=0;i<MAX_STATIC_ROUTING_TABLE;i++)
 		m_routingTable[i]= (STATIC_ROUTING_TABLE*) malloc (sizeof(STATIC_ROUTING_TABLE));
+	routingTableCount=0;
 }
 
 
@@ -24,6 +25,7 @@ void CIpLayer::ResetHeader()
 	m_sHeader.ip_ttl = 0;
 	m_sHeader.ip_proto = 0;
 	memset(mySubnetMask,0,4);
+
 	
 }
 BOOL CIpLayer::Send( unsigned char* ppayload, int nlength , int type)
@@ -41,15 +43,31 @@ BOOL CIpLayer::Receive( unsigned char* ppayload)
 
 BOOL CIpLayer::searchingRoutingTable(unsigned char* ipDst){
 	CARPLayer *arplayer = new CARPLayer("ARPLayer");
-	unsigned char* maskedNetIp;
+	int l = 0;
+	unsigned char maskedNetIp[4];
 	unsigned char check_ARP[] = "A";
 	char flag_g = 'G';
-
-	for(int i = 0; m_routingTable[i]!=NULL;i++){ //문제점이 생길수 있음 조건문에서
-		maskedNetIp = subnetMasking(ipDst);
+	if(ipDst[0]==0)
+		return FALSE;
+	for(int i = 0; i < routingTableCount;i++){ //문제점이 생길수 있음 조건문에서
+		for(int j =0 ; j < 4; j++){
+			mySubnetMask[j] = m_routingTable[i]->netmask[j];
+			maskedNetIp[j] = mySubnetMask[j] & ipDst[j];
+		}
+		
+		if(maskedNetIp[0]==0)
+			return FALSE;
+		if(maskedNetIp[2]==1)
+			return FALSE;
+		unsigned char a = maskedNetIp[0];
+		unsigned char b =maskedNetIp[1];
+		unsigned char c =maskedNetIp[2];
+		unsigned char d =maskedNetIp[3];
 		if(memcmp(m_routingTable[i]->destination,maskedNetIp,4)==0){ // netId가 라우팅테이블에 있을 때
 			if(m_routingTable[i]->flag[1]==flag_g){
-				g_nicName = AdapterList[m_routingTable[i]->interfaceDevice[0]]; //순서가 맞다면 될꺼임
+				int k = m_routingTable[i]->interfaceDevice[0]-48;
+				for( l = 0 ; AdapterList[k][l] != '\0'; l++);
+					g_nicName = CString(AdapterList[k],l);
 				arplayer->setDstIpAddress(m_routingTable[i]->gateway);
 				arplayer->Send(check_ARP,0);
 				return TRUE;
@@ -81,5 +99,6 @@ void CIpLayer::AddRoutingTable(int seq,unsigned char *networkIP , unsigned char 
 	memcpy(m_routingTable[seq]->flag,(LPSTR)(LPCSTR)checked_flag,checked_flag.GetLength());
 	memcpy(m_routingTable[seq]->interfaceDevice,(LPSTR)(LPCSTR)interfaceName,interfaceName.GetLength());
 	m_routingTable[seq]->metric = metric_num;
+	routingTableCount++;
 }
 

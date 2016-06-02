@@ -37,15 +37,15 @@ CDC_ARP_7Dlg::CDC_ARP_7Dlg(CWnd* pParent /*=NULL*/)
    m_LayerMgr.ConnectLayers("PacketDriverLayer ( *EthernetLayer ( *ARPLayer +IpLayer ( *DC_ARP_7 -ARPLayer ) ) )");
    
    //현재 layer와 ARPLayer를 연결
-   mp_UnderLayer = m_LayerMgr.GetLayer(1);
+   mp_UnderLayer = m_LayerMgr.GetLayer(2);
    mp_UnderLayer->SetUpperLayer(m_LayerMgr.GetLayer(0));
-   m_pdLayer = (CPacketDriverLayer*)m_LayerMgr.GetLayer(3);
+   m_pdLayer = (CPacketDriverLayer*)m_LayerMgr.GetLayer(4);
 
    	//나의 IP 주소를 입력
-	ipMyAddress[0] = 169;
-	ipMyAddress[1] = 254;
-	ipMyAddress[2] = 246;
-	ipMyAddress[3] = 245;
+	ipMyAddress[0] = 192;
+	ipMyAddress[1] = 168;
+	ipMyAddress[2] = 1;
+	ipMyAddress[3] = 1;
 
 	((CARPLayer*)mp_UnderLayer)->setSrcIpAddress(ipMyAddress);
 

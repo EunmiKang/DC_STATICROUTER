@@ -45,6 +45,7 @@ public:
 	unsigned char myIp[4];
 	unsigned char mySubnetMask[4];
 	unsigned char myGateWay[4];
+	int routingTableCount;
 
 	CIpLayer(char* pName);
 	~CIpLayer(void);
