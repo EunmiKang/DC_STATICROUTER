@@ -83,7 +83,6 @@ void Routing_Add_Dlg::GetMacAddr(){
         printf("\nNo interfaces found! Make sure WinPcap is installed.\n");
         return;
     }
-	g_nicName = alldevs[0].name; //testÇØ¾ßÇÔ
     /* We don't need any more the device list. Free it */
     pcap_freealldevs(alldevs);
 	i = 0;
