@@ -38,5 +38,7 @@ public:
 	CEdit metric_hop;
 
 
+
 	CComboBox interface_List;
+
 };

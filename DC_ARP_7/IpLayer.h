@@ -28,9 +28,9 @@ public:
 		unsigned char		gateway[4];
 		char				flag[10];
 		char				interfaceDevice[200];		
-		int					a;		
+		int					metric;		
 	}STATIC_ROUTING_TABLE, *PSTATIC_ROUTING_TABLE;
-	PSTATIC_ROUTING_TABLE static m_routingTable[MAX_STATIC_ROUTING_TABLE];
+	 PSTATIC_ROUTING_TABLE m_routingTable[MAX_STATIC_ROUTING_TABLE];
 
 	void         ResetHeader();
 	BOOL         Send( unsigned char* ppayload, int nlength , int type);

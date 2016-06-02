@@ -42,7 +42,7 @@ BOOL Routing_Add_Dlg::OnInitDialog(){
 
 	dst_IP.SetWindowText("192.168.0.0");
 	netmask_IP.SetWindowText("255.255.255.0");
-	Gateway_IP.SetWindowText("255.255.255.0");
+	Gateway_IP.SetWindowText("¿¬°áµÊ");
 
 	UpdateData(TRUE);
 	
