@@ -42,20 +42,20 @@ CDC_ARP_7Dlg::CDC_ARP_7Dlg(CWnd* pParent /*=NULL*/)
    m_pdLayer = (CPacketDriverLayer*)m_LayerMgr.GetLayer(4);
 
    	//나의 IP 주소를 입력
-	ipMyAddress[0] = 192;
-	ipMyAddress[1] = 168;
-	ipMyAddress[2] = 1;
-	ipMyAddress[3] = 1;
+	ipMyAddress[0] = 169;
+	ipMyAddress[1] = 254;
+	ipMyAddress[2] = 208;
+	ipMyAddress[3] = 136;
 
 	((CARPLayer*)mp_UnderLayer)->setSrcIpAddress(ipMyAddress);
 
 	//나의 MAC 주소를 입력
-	macMyAddress[0] = (int)strtol("44",NULL,16);
-	macMyAddress[1] = (int)strtol("A8",NULL,16);
-	macMyAddress[2] = (int)strtol("42",NULL,16);
-	macMyAddress[3] = (int)strtol("F7",NULL,16);
-	macMyAddress[4] = (int)strtol("94",NULL,16);
-	macMyAddress[5] = (int)strtol("0C",NULL,16);
+	macMyAddress[0] = (int)strtol("18",NULL,16);
+	macMyAddress[1] = (int)strtol("67",NULL,16);
+	macMyAddress[2] = (int)strtol("B0",NULL,16);
+	macMyAddress[3] = (int)strtol("C9",NULL,16);
+	macMyAddress[4] = (int)strtol("C4",NULL,16);
+	macMyAddress[5] = (int)strtol("F3",NULL,16);
 
 	GetNetWorkNameList();
 	AfxBeginThread(threadCapture , this);

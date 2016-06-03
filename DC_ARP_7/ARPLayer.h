@@ -1,11 +1,13 @@
 #pragma once
 #include "baselayer.h"
 #include "IpLayer.h"
+#include "LayerManager.h"
 class CARPLayer :
    public CBaseLayer
 {
-public:
 
+public:
+	
    //structure
    typedef struct ArpHeaderStruct
    {
@@ -64,4 +66,8 @@ public:
 
    static const DWORD nRegArpSendMsg;
    static const DWORD nRegKillRestartTimerMsg;
+
+//private:
+//	CLayerManager	layerMgr_arp;
+
 };

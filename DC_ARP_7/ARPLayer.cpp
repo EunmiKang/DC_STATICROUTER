@@ -2,6 +2,7 @@
 #include "ARPLayer.h"
 #include "DC_ARP_7Dlg.h"
 #include "IPLayer.h"
+
 const DWORD CARPLayer::nRegArpSendMsg = ::RegisterWindowMessage( "ARP Send Message" ); //메세지 등록
 const DWORD CARPLayer::nRegKillRestartTimerMsg = ::RegisterWindowMessage( "ARP Send Kill Timer "); //메세지등록
 
@@ -179,7 +180,7 @@ BOOL CARPLayer::Receive(unsigned char* ppayload) //ARP를 받아서 처리하는 함수
          }
          proxy_table.GetNext(Proxy_Node);
       }
-	  if(GetUpperLayer(1)->searchingRoutingTable(pFrame->target_ip_address,1)==TRUE){ //인자로 ARP에서 올라왔다는것을 표시
+	  if(mp_UnderLayer->GetUpperLayer(1)->searchingRoutingTable(pFrame->target_ip_address,1)==TRUE){ //인자로 ARP에서 올라왔다는것을 표시
 		  m_sHeader.hard_type = htons(0x0001);
 		  m_sHeader.prot_type = htons(0x0800);
 		  m_sHeader.hard_size = 6;
@@ -193,7 +194,7 @@ BOOL CARPLayer::Receive(unsigned char* ppayload) //ARP를 받아서 처리하는 함수
 
 		  return mp_UnderLayer->Send((unsigned char*)&m_sHeader , sizeof(m_sHeader), 0x02);
 	  }
-   }//proxy 끝.
+   }
     else if(ntohs(pFrame->op) == 0x0002 &&
       memcmp(pFrame->target_ip_address, m_sHeader.sender_ip_address, 4) == 0)
    {      // reply를 받은 경우

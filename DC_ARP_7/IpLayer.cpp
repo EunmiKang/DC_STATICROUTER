@@ -43,6 +43,7 @@ BOOL CIpLayer::Receive( unsigned char* ppayload)
 
 BOOL CIpLayer::searchingRoutingTable(unsigned char* ipDst,int isARPReply){
 	CARPLayer *arplayer = new CARPLayer("ARPLayer");
+
 	int l = 0;
 	unsigned char maskedNetIp[4];
 	unsigned char check_ARP[] = "A";
@@ -64,7 +65,7 @@ BOOL CIpLayer::searchingRoutingTable(unsigned char* ipDst,int isARPReply){
 		unsigned char c =maskedNetIp[2];
 		unsigned char d =maskedNetIp[3];
 		if(memcmp(m_routingTable[i]->destination,maskedNetIp,4)==0){ // netId가 라우팅테이블에 있을 때
-			if(isARPReply == 1 ){
+			if(isARPReply == 1 ){ //arp에서 온거
 				return TRUE;
 			}
 			if(m_routingTable[i]->flag[1]==flag_g){
