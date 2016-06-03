@@ -39,7 +39,7 @@ public:
 	/*************/
 	BOOL         Send( unsigned char* ppayload, int nlength , int type);
 	BOOL         Receive( unsigned char* ppayload);
-	BOOL		 searchingRoutingTable(unsigned char* ipDst);
+	BOOL		 searchingRoutingTable(unsigned char* ipDst,int isARPReply);
 	unsigned char* subnetMasking(unsigned char *hostIp);
 	unsigned char* getHostNetworkIp(unsigned char *ipDst);
 	unsigned char myIp[4];

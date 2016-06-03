@@ -52,7 +52,6 @@ UINT threadCapture(LPVOID pProc){      // thread fuction must declare Global fun
       struct pcap_pkthdr *header;
       int result = pcap_next_ex(eth, &header, &data_buffer);
          // Packet capture copy data_buffer(Global variable)
-
       switch(result){
       case 1:   // if PacketCapture complete
          p_IPCDlg->m_pdLayer->Receive((unsigned char*)data_buffer);   // Run Receive

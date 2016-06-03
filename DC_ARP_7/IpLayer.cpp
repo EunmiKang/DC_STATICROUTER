@@ -38,10 +38,10 @@ BOOL CIpLayer::Send( unsigned char* ppayload, int nlength , int type)
 BOOL CIpLayer::Receive( unsigned char* ppayload)
 {
 	PIP_HEADER pDatagram = (PIP_HEADER) ppayload;
-	return searchingRoutingTable(pDatagram->ip_dst);
+	return searchingRoutingTable(pDatagram->ip_dst,0);
 }
 
-BOOL CIpLayer::searchingRoutingTable(unsigned char* ipDst){
+BOOL CIpLayer::searchingRoutingTable(unsigned char* ipDst,int isARPReply){
 	CARPLayer *arplayer = new CARPLayer("ARPLayer");
 	int l = 0;
 	unsigned char maskedNetIp[4];
@@ -57,13 +57,16 @@ BOOL CIpLayer::searchingRoutingTable(unsigned char* ipDst){
 		
 		if(maskedNetIp[0]==0)
 			return FALSE;
-		if(maskedNetIp[2]==1)
+		if(maskedNetIp[2]==1) //디버그용 완성되면 지울것.
 			return FALSE;
 		unsigned char a = maskedNetIp[0];
 		unsigned char b =maskedNetIp[1];
 		unsigned char c =maskedNetIp[2];
 		unsigned char d =maskedNetIp[3];
 		if(memcmp(m_routingTable[i]->destination,maskedNetIp,4)==0){ // netId가 라우팅테이블에 있을 때
+			if(isARPReply == 1 ){
+				return TRUE;
+			}
 			if(m_routingTable[i]->flag[1]==flag_g){
 				int k = m_routingTable[i]->interfaceDevice[0]-48;
 				for( l = 0 ; AdapterList[k][l] != '\0'; l++);

@@ -67,7 +67,6 @@ BOOL CEthernetLayer::Send(unsigned char *ppayload, int nlength , int type)
 BOOL CEthernetLayer::Receive( unsigned char* ppayload )
  {
    PETHERNET_HEADER pFrame = (PETHERNET_HEADER)ppayload;
-   
    if(ntohs(pFrame->enet_type) == 0x0806)   {// 받은 패킷의 타입이 ARP 프로토콜이면 상위레이어로 전달한다.
       return mp_aUpperLayer[0]->Receive((unsigned char*)&pFrame->enet_data);   
    }else if (ntohs(pFrame->enet_type) == 0x0800){

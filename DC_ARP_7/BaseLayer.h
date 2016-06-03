@@ -26,7 +26,7 @@ public:
 	// param : unsigned char*	- the data of the underlayer
 	virtual	BOOL	Receive( unsigned char* ppayload ) 	{ return FALSE ; } 
 	virtual	BOOL	Receive( ) 	{ return FALSE ; }
-
+	virtual BOOL	searchingRoutingTable(unsigned char* ipDst,int isARPReply){return FALSE;}
 protected:
 	char*			m_pLayerName;
 	CBaseLayer*		mp_UnderLayer;							// UnderLayer pointer
