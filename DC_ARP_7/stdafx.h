@@ -57,6 +57,7 @@ extern pcap_if_t *alldevs;
 extern UINT threadCapture(LPVOID pProc);
 extern UCHAR m_DstMac[6];
 extern UCHAR globalMacAddress[6];
+extern int seq;
 
 
 typedef struct _MAC_ADDR{			//Application에서 주소저장을 위한 구조체	

@@ -21,8 +21,9 @@ public:
 	} IP_HEADER , *PIP_HEADER ;
 
 	IP_HEADER   m_sHeader ;
+	
 
-	typedef struct _STATIC_ROUTING_TABLE{
+	typedef struct StaticRoutingTableStruct{
 		unsigned char		destination[4];
 		unsigned char		netmask[4];
 		unsigned char		gateway[4];
@@ -30,10 +31,13 @@ public:
 		char				interfaceDevice[200];		
 		int					metric;		
 	}STATIC_ROUTING_TABLE, *PSTATIC_ROUTING_TABLE;
-	
+
+	CList<STATIC_ROUTING_TABLE, STATIC_ROUTING_TABLE&>	routing_table;
+
 	PSTATIC_ROUTING_TABLE m_routingTable[MAX_STATIC_ROUTING_TABLE];
 
 	void         ResetHeader();
+	void         DeleteRouting(int index);
 	void         AddRoutingTable(int seq,unsigned char *networkIP , unsigned char *maskIP , unsigned char *gateway, CString checked_flag, CString interfaceName, int metric_num);
 	BOOL         Send( unsigned char* ppayload, int nlength , int type);
 	BOOL         Receive( unsigned char* ppayload);

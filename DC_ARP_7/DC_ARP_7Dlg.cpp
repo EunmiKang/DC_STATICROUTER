@@ -379,7 +379,6 @@ void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 		gateway.Format("%d.%d.%d.%d" , dlg.gateway[0] , dlg.gateway[1] , dlg.gateway[2] , dlg.gateway[3] );
 
 		if(dlg.flag_list[1] == TRUE){
-		
 		Routing_Cache.InsertItem(seq,seq_string);
 		Routing_Cache.SetItem(seq,0,LVIF_TEXT,ipAddress,0,0,0,0,NULL);
 		Routing_Cache.SetItem(seq,1,LVIF_TEXT,maskIp,0,0,0,0,NULL);
@@ -424,10 +423,14 @@ void CDC_ARP_7Dlg::OnBnClickedRoutingAdd()
 
 void CDC_ARP_7Dlg::OnBnClickedRoutingdeleteBtn()
 {
-   POSITION pos;
-   pos = Routing_Cache.GetFirstSelectedItemPosition();  //ARP Table에서 선택한 entry의 index를 temp로 설정한다.
-
-   int temp = Routing_Cache.GetNextSelectedItem(pos);
-   // 선택한 ARP entry를 찾아 삭제한다.
-   ((CARPLayer*)m_LayerMgr.GetLayer(1))->DeleteRouting(temp);	
+	POSITION pos = Routing_Cache.GetFirstSelectedItemPosition(); // 선택된 첫 번째 위치를 얻어 와서,
+	while(pos != NULL){ // 위치가 유효하다면,
+		int nItem = Routing_Cache.GetNextSelectedItem(pos); // 그 위치에 해당하는 item의 index 를 얻고,
+		((CIpLayer*)m_LayerMgr.GetLayer(2))->DeleteRouting(nItem);
+		Routing_Cache.DeleteItem(nItem); // 그 item 을 UI에서 지운다.
+		pos = Routing_Cache.GetFirstSelectedItemPosition(); // 선택된 첫번째 위치를 다시 얻어 온다.
+	}
+   //// 선택한 ARP entry를 찾아 삭제한다.
+   
+   seq--;
 }

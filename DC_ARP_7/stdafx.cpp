@@ -13,3 +13,4 @@ CString g_nicName;
 UCHAR m_DstMac[6];
 UCHAR globalMacAddress[6];
 pcap_if_t *alldevs;
+int seq;

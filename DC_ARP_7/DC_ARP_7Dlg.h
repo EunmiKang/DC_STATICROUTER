@@ -41,7 +41,7 @@ private :
                ARP_SETTING    } ;
 
 public:
-	int seq;
+	//int seq; -> 전역으로 뺌
 	unsigned char ipMyAddress[4]; // ip 설정 전역변수
 	int routingTableCount;
 	CListCtrl ARP_Cache;

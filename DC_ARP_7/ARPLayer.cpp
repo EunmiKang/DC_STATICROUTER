@@ -447,8 +447,9 @@ void CARPLayer::DeleteItem(int index) //ARP table의 엔트리 하나를 삭제
    cache_table.RemoveAt(cache_table.FindIndex(index)); 
    updateList();
 }
-void CARPLayer::DeleteRouting(int index) //ARP table의 엔트리 하나를 삭제
-{
-   cache_table.RemoveAt(cache_table.FindIndex(index)); 
-   updateList();
-}
+//
+//void CARPLayer::DeleteRouting(int index) //Routing table의 엔트리 하나를 삭제
+//{
+//   Routing_table.RemoveAt(Routing_table.FindIndex(index)); 
+//
+//}

@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "IpLayer.h"
 #include "ARPLayer.h"
+#include "DC_ARP_7Dlg.h"
 #include <string.h>
 
 CIpLayer::CIpLayer(char* pName)
@@ -96,7 +97,7 @@ unsigned char* CIpLayer::subnetMasking(unsigned char *hostIp){
 }
 
 void CIpLayer::AddRoutingTable(int seq,unsigned char *networkIP , unsigned char *maskIP , unsigned char *gateway, CString checked_flag, CString interfaceName, int metric_num)
-{   //입력받은 내용들 Routing table에 추가
+{   //입력받은 내용들 Routing table 자료구조에 추가
 	memcpy(m_routingTable[seq]->destination,networkIP,4);
 	memcpy(m_routingTable[seq]->netmask,maskIP,4);
 	memcpy(m_routingTable[seq]->gateway,gateway,4);
@@ -106,3 +107,7 @@ void CIpLayer::AddRoutingTable(int seq,unsigned char *networkIP , unsigned char 
 	routingTableCount++;
 }
 
+void CIpLayer::DeleteRouting(int index) //Routing table의 엔트리 하나를 삭제
+{
+	memmove(m_routingTable+index, m_routingTable+index+1 , seq-index);
+}
